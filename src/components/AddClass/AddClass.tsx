@@ -1,13 +1,7 @@
 import React from "react";
+import { AddClassProp } from "@/app/utils/interfaces";
 
-interface addClassProp {
-  setAddingClass: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedQuarter: React.Dispatch<React.SetStateAction<[string, string]>>;
-  season: string;
-  year: string;
-}
-
-const AddClass: React.FC<addClassProp> = ({
+const AddClass: React.FC<AddClassProp> = ({
   setAddingClass,
   setSelectedQuarter,
   season,

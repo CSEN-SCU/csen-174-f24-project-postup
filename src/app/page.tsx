@@ -6,6 +6,7 @@ import Course from "@/components/course";
 import Quarter from "@/components/Quarter";
 import React, { Dispatch, useState, SetStateAction } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
+import { UserCourse, CourseData } from "./utils/interfaces";
 
 export default function Home() {
   const [isAddingClass, setAddingClass]: [
@@ -16,11 +17,33 @@ export default function Home() {
     [string, string],
     Dispatch<SetStateAction<[string, string]>>
   ] = useState(["", ""]);
+  // State to hold the user's 4 year plan. So we're not manipulating the actual document holding the 4yp yet, but rather creating a "temp" variable that the user can save later.
+  const [userPlan, setUserPlan] = useState<UserCourse[]>(userCourses);
+
+  const onSubmit = (addedCourse: CourseData) => {
+    setUserPlan((prevUserPlan) =>
+      prevUserPlan.map((quarter) => {
+        // find the matching quarter + year pair. Then add the course to that.
+        if (
+          quarter.season === selectedQuarter[0] &&
+          quarter.year === selectedQuarter[1]
+        ) {
+          return {
+            ...quarter,
+            courses: [...quarter.courses, addedCourse],
+          };
+        }
+        return quarter;
+      })
+    );
+    setAddingClass(false);
+    setSelectedQuarter(["", ""])
+  };
 
   return (
     <div className="grid grid-cols-3 items-start justify-items-center min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {/* userCourses is a .ts file filled with Dummy course data for testing */}
-      {userCourses.map(({ season, year, courses }, index) => (
+      {userPlan.map(({ season, year, courses }, index) => (
         <div key={index} className="border-2 #000 p-4 rounded-lg w-96 h-auto">
           <Quarter quarterSeason={season} year={year}></Quarter>
           {courses.map((course, idx) => (
@@ -38,14 +61,17 @@ export default function Home() {
                 courseName={"test"}
                 courseId={"test"}
                 units={"5"}
+                onSubmit={onSubmit}
               />
             )}
-          <AddClass
-            setAddingClass={setAddingClass}
-            setSelectedQuarter={setSelectedQuarter}
-            season={season}
-            year={year}
-          />
+          { !(selectedQuarter[0] == season && selectedQuarter[1] == year) && (
+            <AddClass
+              setAddingClass={setAddingClass}
+              setSelectedQuarter={setSelectedQuarter}
+              season={season}
+              year={year}
+            />
+          )}
         </div>
       ))}
     </div>
