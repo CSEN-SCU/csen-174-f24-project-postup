@@ -7,7 +7,7 @@ interface QuarterProps {
 
 const Quarter: React.FC<QuarterProps> = ({ quarterSeason, year }) => {
   return (
-    <div className="border-b-2 #000 p-2">
+    <div className="">
       <p>{quarterSeason} - {year}</p>
     </div>
   );
