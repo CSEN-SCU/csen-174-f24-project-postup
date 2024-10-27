@@ -1,11 +1,12 @@
 name: scucourseplanner
 services:
-  - name: scucourseplanner
+  - name: scucourseplannerdevelop
+    github:
+        branch: dev
+        repo: CSEN-SCU/SCU-Course-Planner
+        dockerfile_path: Dockerfile
+  - name: scucourseplannermain
     github:
       branch: main
       repo: CSEN-SCU/SCU-Course-Planner
-    image:
-      registry_type: GHCR
-      registry: YOUR_ORG
-      repository: YOUR_REPO
-      digest: ${SAMPLE_DIGEST}
+      dockerfile_path: Dockerfile
