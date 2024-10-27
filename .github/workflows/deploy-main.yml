@@ -1,16 +1,16 @@
-name: Deploy Main
+name: Build, Push and Deploy a Docker Image
 
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-push-deploy-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
       - name: Deploy the app
-        uses: digitalocean/app_action/deploy@v2
+        uses: digitalocean/app_action/deploy@v2.0.6
         env:
           SAMPLE_DIGEST: ${{ steps.push.outputs.digest }}
         with:

@@ -1,0 +1,11 @@
+name: scu_course_planner
+services:
+  - name: scu_course_planner
+    github:
+      branch: main
+      repo: CSEN-SCU/SCU-Course-Planner
+    image:
+      registry_type: GHCR
+      registry: YOUR_ORG
+      repository: YOUR_REPO
+      digest: ${SAMPLE_DIGEST}
