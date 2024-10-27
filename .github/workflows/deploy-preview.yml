@@ -2,7 +2,7 @@ name: App Platform Preview
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 permissions:
   contents: read
