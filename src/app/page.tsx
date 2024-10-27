@@ -42,8 +42,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+    <div className="flex flex-col">
+      <div className="flex w-full justify-end">
+        <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+      </div>
       <div className="grid grid-cols-3 items-start justify-items-center min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         {/* userCourses is a .ts file filled with Dummy course data for testing */}
         {userPlan.map(({ season, year, courses }, index) => (

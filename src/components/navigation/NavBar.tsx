@@ -25,14 +25,14 @@ const NavBar: React.FC<NavBarProps> = () => {
             passHref
           >
             <NavigationMenuLink className="text-base text-white">
-              Plan
+              Academic Plan
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link
             className={buttonVariants({ variant: "outline" })}
-            href="/"
+            href="/tools"
             passHref
           >
             <NavigationMenuLink className="text-base text-white">
@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = () => {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        <NavigationMenuItem className="pr-4">
           <Link
             className={buttonVariants({ variant: "outline" })}
             href="/"
