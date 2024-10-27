@@ -1,6 +1,6 @@
-name: scu_course_planner
+name: scuCoursePlanner
 services:
-  - name: scu_course_planner
+  - name: scuCoursePlanner
     github:
       branch: main
       repo: CSEN-SCU/SCU-Course-Planner
