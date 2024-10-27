@@ -3,7 +3,6 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-  NavigationMenuLink,
 } from "../ui/navigation-menu";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
@@ -18,18 +17,23 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = () => {
   return (
     <div className="flex flex-row w-full justify-between border-b-2 pb-4 #000">
+      {/* Side Sheet */}
       <div className="mt-4">
         <Sheet>
           <SheetTrigger
             className={
               buttonVariants({ variant: "outline" }) + "items-center ml-4"
             }
+            asChild
           >
-            <SheetContent side={"left"}></SheetContent>
-            <p className="text-base text-white">Menu</p>
+            <p className="text-base text-white font-semibold hover:cursor-pointer">Menu</p>
           </SheetTrigger>
+
+          <SheetContent side={"left"}></SheetContent>
         </Sheet>
       </div>
+
+      {/* Navigation Bar */}
       <NavigationMenu className="flex mt-4 w-screen">
         <NavigationMenuList className="space-x-6">
           <NavigationMenuItem>
@@ -38,9 +42,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               href="/"
               passHref
             >
-              <NavigationMenuLink className="text-base text-white">
-                Academic Plan
-              </NavigationMenuLink>
+              <p className="text-base text-white">Academic Plan</p>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
@@ -49,9 +51,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               href="/tools"
               passHref
             >
-              <NavigationMenuLink className="text-base text-white">
-                Tools and Useful Links{" "}
-              </NavigationMenuLink>
+              <p className="text-base text-white">Tools and Useful Links </p>
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem className="pr-4">
@@ -60,9 +60,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               href="/"
               passHref
             >
-              <NavigationMenuLink className="text-base text-white">
-                Search Class
-              </NavigationMenuLink>
+              <p className="text-base text-white">Search Class</p>
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
