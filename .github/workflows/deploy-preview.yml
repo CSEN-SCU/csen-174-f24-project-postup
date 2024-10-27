@@ -8,8 +8,6 @@ permissions:
   contents: read
   pull-requests: write
 
-
-
 jobs:
   test:
     name: preview
@@ -34,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.REPO_NAME }}:latest
+          tags: ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
       - name: Deploy the app
         id: deploy
         uses: digitalocean/app_action/deploy@v2.0.6
