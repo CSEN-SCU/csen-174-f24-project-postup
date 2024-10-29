@@ -1,5 +1,5 @@
 // pages/tools-and-useful-links.js
-
+import NavBar from "@/components/navigation/NavBar";
 import React from "react";
 
 const csenLinks = [
@@ -50,9 +50,12 @@ const advisorInfo = {
 
 const ToolsAndUsefulLinks = () => {
   return (
-    <div className="flex flex-col font-sans">
+    <div className="flex flex-col">
+      <div className="w-full flex justify-end">
+        <NavBar isLoggedIn={true} selectedPage={"Tools"}></NavBar>
+      </div>
       {/* Main Content */}
-      <div className="grid grid-cols-3 gap-4 p-4">
+      <div className="grid grid-cols-3 gap-4 p-4 font-sans">
         {/* Contact Advisors Section */}
         <section className="col-span-3 bg-gray-200 p-4 rounded">
           <h2 className="text-lg font-semibold mb-2">Contact Advisors</h2>
