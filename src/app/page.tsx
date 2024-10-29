@@ -7,6 +7,7 @@ import Quarter from "@/components/Quarter";
 import React, { Dispatch, useState, SetStateAction } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
 import { UserCourse, CourseData } from "./utils/interfaces";
+import NavBar from "@/components/navigation/NavBar";
 
 export default function Home() {
   const [isAddingClass, setAddingClass]: [
@@ -41,8 +42,13 @@ export default function Home() {
   };
 
   return (
-    <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <DragDropCourses/>
+    <div className="flex flex-col">
+      <div className="flex w-full">
+        <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+      </div>
+      <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <DragDropCourses/>
+       </div>
     </div>
   );
 }

@@ -11,7 +11,10 @@
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@formkit/auto-animate": "^0.8.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-navigation-menu": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@sentry/nextjs": "^8.35.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.453.0",
