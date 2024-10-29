@@ -2,24 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DndContext, useDraggable, useDroppable, DragEndEvent } from "@dnd-kit/core";
 import autoAnimate from "@formkit/auto-animate";
+import { userCourses } from "./UserData/userCourses";
 
 // Initial course data
-const initialCourses = [
-  {
-    season: "Fall",
-    year: "2021",
-    courses: [{ name: "Operating Systems", id: "CSEN 177", unit: "4" }],
-  },
-  /*{
-    season: "Fall",
-    year: "2022",
-    courses: [
-      { name: "Programming Languages", id: "CSEN 171", unit: "4" },
-      { name: "Software Engineering", id: "CSEN 174", unit: "4" },
-    ],
-},*/
-  // Additional quarters and courses as needed...
-];
+const initialCourses = userCourses;
 
 // Type definitions for course structure
 type Course = { name: string; id: string; unit: string };
