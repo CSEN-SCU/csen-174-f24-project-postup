@@ -10,6 +10,9 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 
+import NavBar from "@/components/navigation/NavBar";
+import React from "react";
+
 const csenLinks = [
   {
     name: "B.S. in Computer Science and Engineering",
@@ -59,7 +62,7 @@ const contactAdvisorInfo = {
 const peerAdvisorInfo = {
   name: "Jane Smith",
   email: "janesmith@example.com",
-};
+
 
 const ToolsAndUsefulLinks = () => {
   return (
@@ -139,7 +142,6 @@ const ToolsAndUsefulLinks = () => {
             </ul>
           </CardContent>
         </Card>
-
         <Card className="col-span-2">
           <CardHeader>
             <CardTitle>Office of the Registrar Links</CardTitle>
