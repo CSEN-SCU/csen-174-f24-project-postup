@@ -2,11 +2,12 @@
 
 import AddClass from "@/components/AddClass/AddClass";
 import AddClassTemplate from "@/components/AddClass/AddClassTemplate";
-import Course from "@/components/course";
+import DragDropCourses from "@/components/dragDropCard";
 import Quarter from "@/components/Quarter";
 import React, { Dispatch, useState, SetStateAction } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
 import { UserCourse, CourseData } from "./utils/interfaces";
+
 
 export default function Home() {
   const [isAddingClass, setAddingClass]: [
@@ -45,34 +46,16 @@ export default function Home() {
       {/* userCourses is a .ts file filled with Dummy course data for testing */}
       {userPlan.map(({ season, year, courses }, index) => (
         <div key={index} className="border-2 #000 p-4 rounded-lg w-96 h-auto">
-          <Quarter quarterSeason={season} year={year}></Quarter>
-          {courses.map((course, idx) => (
-            <Course
-              key={idx}
-              courseName={course.name}
-              id={course.id}
-              unit={course.unit}
-            />
-          ))}
-          {isAddingClass &&
-            selectedQuarter[0] === season &&
-            selectedQuarter[1] === year && (
-              <AddClassTemplate
-                courseName={"test"}
-                courseId={"test"}
-                units={"5"}
-                onSubmit={onSubmit}
-              />
-            )}
-          { !(selectedQuarter[0] == season && selectedQuarter[1] == year) && (
-            <AddClass
-              setAddingClass={setAddingClass}
-              setSelectedQuarter={setSelectedQuarter}
-              season={season}
-              year={year}
-            />
-          )}
-        </div>
+  {courses.map((course, idx) => (
+    <DragDropCourses
+      key={idx}
+      courseName={course.name}
+      id={course.id}
+      unit={course.unit}
+    />
+  ))}
+</div>
+
       ))}
     </div>
   );
