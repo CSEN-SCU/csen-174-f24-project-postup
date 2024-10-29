@@ -90,15 +90,17 @@ function CourseCard({ id, course, season, year }: CourseCardProps) {
     id,
     data: { ...course, season, year },
   });
+  
 
   const style = {
     transform: `translate3d(${transform?.x || 0}px, ${transform?.y || 0}px, 0)`,
-    padding: "10px",
-    margin: "5px",
+    padding: "15px",
+    margin: "8px",
     backgroundColor: "lightblue",
     cursor: "grab",
-    borderRadius: "4px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+    borderRadius: "6px",
+    boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
+    fontSize: "1.1em",
   };
 
   return (
