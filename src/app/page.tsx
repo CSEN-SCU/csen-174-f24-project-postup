@@ -8,7 +8,6 @@ import React, { Dispatch, useState, SetStateAction } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
 import { UserCourse, CourseData } from "./utils/interfaces";
 
-
 export default function Home() {
   const [isAddingClass, setAddingClass]: [
     boolean,
@@ -38,25 +37,12 @@ export default function Home() {
       })
     );
     setAddingClass(false);
-    setSelectedQuarter(["", ""])
+    setSelectedQuarter(["", ""]);
   };
 
   return (
-    <div className="grid grid-cols-3 items-start justify-items-center min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {/* userCourses is a .ts file filled with Dummy course data for testing */}
-      {userPlan.map(({ season, year, courses }, index) => (
-        <div key={index} className="border-2 #000 p-4 rounded-lg w-96 h-auto">
-  {courses.map((course, idx) => (
-    <DragDropCourses
-      key={idx}
-      courseName={course.name}
-      id={course.id}
-      unit={course.unit}
-    />
-  ))}
-</div>
-
-      ))}
+    <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <DragDropCourses/>
     </div>
   );
 }
