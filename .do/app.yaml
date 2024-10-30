@@ -1,12 +1,7 @@
 name: scucourseplanner
 services:
-  - name: scucourseplannermain
-    github:
-        branch: main
-        repo: csen-scu/scu-course-planner
-        dockerfile_path: Dockerfile
   - name: scucourseplannerdevelop
     github:
-      branch: develop
+      branch: devops/develop
       repo: csen-scu/scu-course-planner
       dockerfile_path: Dockerfile
