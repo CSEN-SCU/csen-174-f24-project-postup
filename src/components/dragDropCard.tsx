@@ -94,8 +94,8 @@ function CourseCard({ id, course, season, year }: CourseCardProps) {
 
   const style = {
     transform: `translate3d(${transform?.x || 0}px, ${transform?.y || 0}px, 0)`,
-    padding: "15px",
-    margin: "8px",
+    padding: "12px",
+    margin: "20px",
     backgroundColor: "lightblue",
     cursor: "grab",
     borderRadius: "6px",
