@@ -1,8 +1,10 @@
 // components/DragDropCard.tsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { DndContext, useDraggable, useDroppable, DragEndEvent } from "@dnd-kit/core";
 import autoAnimate from "@formkit/auto-animate";
 import { userCourses } from "./UserData/userCourses";
+import { AddClassProp } from "@/app/utils/interfaces";
+import AddClass from "./UserData/AddClass";
 
 // Initial course data
 const initialCourses = userCourses;
@@ -14,7 +16,14 @@ type Quarter = { season: string; year: string; courses: Course[] };
 // Main Drag and Drop Component
 export default function DragDropCourses() {
   const [quarters, setQuarters] = useState<Quarter[]>(initialCourses);
-
+  const [isAddingClass, setAddingClass]: [
+    boolean,
+    Dispatch<SetStateAction<boolean>>
+  ] = useState(false);
+  const [selectedQuarter, setSelectedQuarter]: [
+    [string, string],
+    Dispatch<SetStateAction<[string, string]>>
+  ] = useState(["", ""]);
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
@@ -50,6 +59,7 @@ export default function DragDropCourses() {
 
   const renderCourseCards = (season: string, year: string) => {
     const quarterCourses = quarters.find((q) => q.season === season && q.year === year)?.courses || [];
+
     return quarterCourses.map((course) => (
       <CourseCard
         key={`${season}-${year}-${course.id}`}
@@ -69,6 +79,7 @@ export default function DragDropCourses() {
           {quarters.map(({ season, year }) => (
             <DroppableQuarter key={`${season}-${year}`} id={`${season}-${year}`} season={season} year={year}>
               {renderCourseCards(season, year)}
+              <AddClass setAddingClass={setAddingClass} setSelectedQuarter={setSelectedQuarter} season={season} year={year}/>
             </DroppableQuarter>
           ))}
         </div>
@@ -90,7 +101,6 @@ function CourseCard({ id, course, season, year }: CourseCardProps) {
     id,
     data: { ...course, season, year },
   });
-  
 
   const style = {
     transform: `translate3d(${transform?.x || 0}px, ${transform?.y || 0}px, 0)`,
@@ -136,6 +146,28 @@ function DroppableQuarter({ id, season, year, children }: DroppableQuarterProps)
     padding: "10px",
     minHeight: "100px",
     borderRadius: "4px",
+  };
+
+  const AddClass: React.FC<AddClassProp> = ({
+    setAddingClass,
+    setSelectedQuarter,
+    season,
+    year,
+  }) => {
+    return (
+      <div className="items-center flex">
+        <button
+          onClick={() => {
+            setAddingClass(true);
+            setSelectedQuarter([season, year]);
+          }}
+        >
+          <div className="rounded-sm transition ease-in-out delay-10 bg-slate-500 shadow-md hover:bg-slate-400 active:bg-slate-500 text-center p-2 mt-2">
+            <text className="text-center text-white">Add Class</text>
+          </div>
+        </button>
+      </div>
+    );
   };
 
   return (

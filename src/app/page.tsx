@@ -1,6 +1,6 @@
 "use client"; // "The component gets prerendered with SSR or ISR/SSG if possible on the server. The html is send to the client and the javascript is send too. So it gets hydrated on the client and is interactive"
 
-import AddClass from "@/components/AddClass/AddClass";
+import AddClass from "@/components/UserData/AddClass";
 import AddClassTemplate from "@/components/AddClass/AddClassTemplate";
 import DragDropCourses from "@/components/dragDropCard";
 import Quarter from "@/components/Quarter";
