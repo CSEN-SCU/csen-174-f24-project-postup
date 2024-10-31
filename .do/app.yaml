@@ -1,6 +1,10 @@
 name: scucourseplannerdevelop
 services:
   - name: scucourseplannerdevelop
+    envs:
+      - key: SENTRY_AUTH_TOKEN
+        value: ${SENTRY_AUTH_TOKEN}
+        type: SECRET
     github:
       branch: develop
       repo: csen-scu/scu-course-planner
@@ -9,6 +13,10 @@ services:
 name: scucourseplannermain
 services:
   - name: scucourseplannermain
+    envs:
+      - key: SENTRY_AUTH_TOKEN
+        value: ${SENTRY_AUTH_TOKEN}
+        type: SECRET
     github:
       branch: main
       repo: csen-scu/scu-course-planner
@@ -17,6 +25,10 @@ services:
 name: scucourseplannerpr
 services:
   - name: scucourseplannerpr
+    envs:
+      - key: SENTRY_AUTH_TOKEN
+        value: ${SENTRY_AUTH_TOKEN}
+        type: SECRET
     github:
       branch: develop
       repo: csen-scu/scu-course-planner
