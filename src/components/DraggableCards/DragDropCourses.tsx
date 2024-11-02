@@ -77,7 +77,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
         <div className="grid grid-cols-3 gap-4">
           {userPlan.map(({ season, year }) => (
             <DroppableQuarter
-              key={`${season}-${year}`}
               id={`${season}-${year}`}
               season={season}
               year={year}
