@@ -1,22 +1,23 @@
 // components/DragDropCard.tsx
-import React, {
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
-import {
-  DndContext,
-  DragEndEvent,
-} from "@dnd-kit/core";
+import React, { useState, Dispatch, SetStateAction } from "react";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
+import AddClassTemplate from "../AddClass/AddClassTemplate";
 import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import { DragDropCardProps } from "@/app/utils/interfaces";
 // Initial course data
 
-const DragDropCourses: React.FC<DragDropCardProps> = ({ setSelectedQuarter, onSubmit, setUserPlan, userPlan }) => {
-
+const DragDropCourses: React.FC<DragDropCardProps> = ({
+  setSelectedQuarter,
+  setUserPlan,
+  userPlan,
+  selectedQuarter,
+  setAddingClass,
+  isAddingClass,
+  onSubmit,
+}) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
@@ -82,17 +83,31 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({ setSelectedQuarter, onSu
               year={year}
             >
               {renderCourseCards(season, year)}
-              <AddClass
-                setSelectedQuarter={setSelectedQuarter}
-                season={season}
-                year={year}
-              />
+              {/* Rendering Logic for the Add Class button */}
+              {!(
+                selectedQuarter[0] == season && selectedQuarter[1] == year
+              ) && (
+                <AddClass
+                  setSelectedQuarter={setSelectedQuarter}
+                  setAddingClass={setAddingClass}
+                  season={season}
+                  year={year}
+                />
+              )}
+              <div className="flex justify-center">
+                {/* Rendering Logic for Template "Add Classes" inputs*/}
+                {isAddingClass &&
+                  selectedQuarter[0] === season &&
+                  selectedQuarter[1] === year && (
+                    <AddClassTemplate onSubmit={onSubmit} />
+                    )}
+              </div>
             </DroppableQuarter>
           ))}
         </div>
       </div>
     </DndContext>
   );
-}
+};
 
-export default DragDropCourses
+export default DragDropCourses;

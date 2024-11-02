@@ -14,6 +14,7 @@ export default function Home() {
   ] = useState(["", ""]);
 
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
+  const [addingClass, setAddingClass] = useState<boolean>(false);
 
   const onSubmit = (addedCourse: CourseData) => {
     setUserPlan((prevUserPlan) =>
@@ -31,8 +32,9 @@ export default function Home() {
         return quarter;
       })
     );
-    // reset the selected quarter
+    // reset the selected quarter and the state of adding classes
     setSelectedQuarter(["", ""]);
+    setAddingClass(false);
   };
 
   return (
@@ -43,8 +45,11 @@ export default function Home() {
       <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <DragDropCourses
           setSelectedQuarter={setSelectedQuarter}
+          selectedQuarter={selectedQuarter}
           onSubmit={onSubmit}
           setUserPlan={setUserPlan}
+          setAddingClass={setAddingClass}
+          isAddingClass={addingClass}
           userPlan={userPlan}
         />
       </div>

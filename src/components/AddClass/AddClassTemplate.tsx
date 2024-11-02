@@ -6,14 +6,14 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { AddClassTemplateProps } from "@/app/utils/interfaces";
+import { AddClassTemplateProp } from "@/app/utils/interfaces";
 
 /*
  * This component is the "popup" that appears when a user clicks the "Add Class" button.
  * The goal is to have the user fill out the number of units, course name, and course ID.
  */
 
-const AddClassTemplate: React.FC<AddClassTemplateProps> = ({ onSubmit }) => {
+const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -57,11 +57,11 @@ const AddClassTemplate: React.FC<AddClassTemplateProps> = ({ onSubmit }) => {
   };
 
   return (
-    <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-10 mt-2 bg-slate-50">
+    <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
       <Input
         ref={inputRefs[0]}
         placeholder="Course Name"
-        className="text-lg font-semibold w-3/4"
+        className="text-lg font-semibold w-4/5"
         onKeyDown={(e) => handleKeyDown(e, 0)}
       ></Input>
       <Input
@@ -74,7 +74,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProps> = ({ onSubmit }) => {
         <Input
           ref={inputRefs[2]}
           placeholder="Units"
-          className="mt-2 w-1/2"
+          className="mt-2 w-2/3"
           onKeyDown={(e) => handleKeyDown(e, 2)}
         ></Input>
         <div className="justify-end items-end flex">
