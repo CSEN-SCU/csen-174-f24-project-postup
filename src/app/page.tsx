@@ -5,7 +5,7 @@ import React, { Dispatch, useState, SetStateAction } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
 import { CourseData } from "./utils/interfaces";
 import { UserCourseData } from "./utils/types";
-import NavBar from "@/components/Navigation/NavBar";
+import NavBar from "../components/Navigation/NavBar";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
