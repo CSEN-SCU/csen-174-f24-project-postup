@@ -1,5 +1,5 @@
 // components/DragDropCard.tsx
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -77,6 +77,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
         <div className="grid grid-cols-3 gap-4">
           {userPlan.map(({ season, year }) => (
             <DroppableQuarter
+              key={`${season}-${year}`}
               id={`${season}-${year}`}
               season={season}
               year={year}

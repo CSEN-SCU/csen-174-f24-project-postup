@@ -30,7 +30,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
     if (inputRefs[0].current) {
       inputRefs[0].current.focus();
     }
-  }, []);
+  });
 
   // This function allows for arrow keys to be used to go up and down input boxes
   const handleKeyDown = (

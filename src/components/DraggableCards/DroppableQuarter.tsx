@@ -14,7 +14,7 @@ const DroppableQuarter: React.FC<DroppableQuarterProps> = ({
 
   // Initialize auto-animate for smooth transitions
   useEffect(() => {
-    parentRef.current && autoAnimate(parentRef.current);
+    if (parentRef.current) autoAnimate(parentRef.current);
   }, [parentRef]);
 
   const style = {
