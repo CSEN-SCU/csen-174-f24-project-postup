@@ -9,8 +9,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-
-import NavBar from "@/components/Navigation/NavBar";
+import NavBar from "../../components/Navigation/NavBar";
 
 const csenLinks = [
   {
