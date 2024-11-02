@@ -2,7 +2,6 @@ import React from "react";
 import { AddClassProp } from "@/app/utils/interfaces";
 
 const AddClass: React.FC<AddClassProp> = ({
-  setAddingClass,
   setSelectedQuarter,
   season,
   year,
@@ -11,7 +10,6 @@ const AddClass: React.FC<AddClassProp> = ({
     <div className="items-center flex">
       <button
         onClick={() => {
-          setAddingClass(true);
           setSelectedQuarter([season, year]);
         }}
       >

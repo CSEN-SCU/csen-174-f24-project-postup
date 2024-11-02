@@ -10,7 +10,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 
-import NavBar from "@/components/navigation/NavBar";
+import NavBar from "@/components/Navigation/NavBar";
 
 const csenLinks = [
   {
