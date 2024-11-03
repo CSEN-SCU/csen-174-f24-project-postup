@@ -1,3 +1,5 @@
+import { UserCourseData } from "./types";
+
 /** 
  * File for all our interfaces. Avoids bloat.
 */
@@ -7,10 +9,13 @@ export interface CourseData {
   unit: string;
 }
 
-export interface AddClassTemplateProps {
-  courseName?: string;
-  courseId?: string;
-  units?: string;
+export interface DragDropCardProps {
+  setSelectedQuarter: React.Dispatch<React.SetStateAction<[string, string]>>;
+  setUserPlan: React.Dispatch<React.SetStateAction<UserCourseData[]>>;
+  setAddingClass: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddingClass: boolean;
+  selectedQuarter: [string,string];
+  userPlan: UserCourseData[];
   // Function to handle submissions
   onSubmit?: (arg0: CourseData) => void;
 }
@@ -22,8 +27,12 @@ export interface UserCourse {
 }
 
 export interface AddClassProp {
-  setAddingClass: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedQuarter: React.Dispatch<React.SetStateAction<[string, string]>>;
+  setAddingClass: React.Dispatch<React.SetStateAction<boolean>>;
   season: string;
   year: string;
+}
+
+export interface AddClassTemplateProp {
+  onSubmit?: (arg0: CourseData) => void;
 }

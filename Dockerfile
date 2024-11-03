@@ -24,6 +24,8 @@ COPY --from=deps /app/node_modules ./node_modules
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY . .
+# Verify the cache, just making sure it's not corrupted before building
+RUN npm cache verify
 RUN npm run build
 
 # Production image, copy all the files and run next
