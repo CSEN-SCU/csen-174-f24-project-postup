@@ -6,7 +6,8 @@ import {
 } from "../ui/navigation-menu";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import AuthenticationSheet from "../Authentication/AuthenticationSheet";
 
 interface NavBarProps {
   // For the edge case in the future if a user manages to access this site without an SCU Email (they shouldn't be able to access resources)
@@ -14,7 +15,7 @@ interface NavBarProps {
   selectedPage: string;
 }
 
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar: React.FC<NavBarProps> = ({isLoggedIn}) => {
   return (
     <div className="flex flex-row w-full justify-between border-b-2 pb-4 #000">
       {/* Side Sheet */}
@@ -24,12 +25,20 @@ const NavBar: React.FC<NavBarProps> = () => {
             className={
               buttonVariants({ variant: "outline" }) + "items-center ml-4"
             }
-            asChild
           >
             <p className="text-base text-white font-semibold hover:cursor-pointer">Menu</p>
           </SheetTrigger>
 
-          <SheetContent side={"left"}></SheetContent>
+          <SheetContent side={"left"}>
+            <SheetHeader>
+              <SheetTitle className="text-3xl">
+                Welcome to SCU Course Planner!
+              </SheetTitle>
+              {/* Once authentication is created, swap the two rendering logic booleans */}
+              {isLoggedIn && <AuthenticationSheet/>}
+              {!isLoggedIn && <p>User Info!!!!!</p>}
+            </SheetHeader>
+          </SheetContent>
         </Sheet>
       </div>
 
