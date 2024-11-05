@@ -1,13 +1,18 @@
 import React from "react";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
+import Link from "next/link";
 
 const LoginButton = () => {
   return (
-    <Button className={buttonVariants({variant:"outline"})}>
+    <Link
+      className={buttonVariants({ variant: "outline" })}
+      href="/sign-in"
+      passHref
+    >
       <div>
         <p className="font-bold">Login</p>
       </div>
-    </Button>
+    </Link>
   );
 };
 
