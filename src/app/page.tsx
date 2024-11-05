@@ -6,7 +6,7 @@ import { userCourses } from "@/components/UserData/userCourses";
 import { CourseData } from "./utils/interfaces";
 import { UserCourseData } from "./utils/types";
 import NavBar from "../components/Navigation/NavBar";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { app } from "./utils/firebase";
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +18,7 @@ export default function Home() {
   ] = useState(["", ""]);
 
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
 
