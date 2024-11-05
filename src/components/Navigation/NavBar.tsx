@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import ProfilePage from "@/app/user/page";
 
 interface NavBarProps {
   // For the edge case in the future if a user manages to access this site without an SCU Email (they shouldn't be able to access resources)
@@ -29,7 +30,9 @@ const NavBar: React.FC<NavBarProps> = () => {
             <p className="text-base text-white font-semibold hover:cursor-pointer">Menu</p>
           </SheetTrigger>
 
-          <SheetContent side={"left"}></SheetContent>
+          <SheetContent side={"left"}>
+            <ProfilePage></ProfilePage>
+          </SheetContent>
         </Sheet>
       </div>
 
