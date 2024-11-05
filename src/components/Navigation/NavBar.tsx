@@ -6,7 +6,7 @@ import {
 } from "../ui/navigation-menu";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
-import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import ProfilePage from "@/app/user/page";
 
 interface NavBarProps {
@@ -15,7 +15,7 @@ interface NavBarProps {
   selectedPage: string;
 }
 
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar: React.FC<NavBarProps> = ({}) => {
   return (
     <div className="flex flex-row w-full justify-between border-b-2 pb-4 #000">
       {/* Side Sheet */}
@@ -25,12 +25,16 @@ const NavBar: React.FC<NavBarProps> = () => {
             className={
               buttonVariants({ variant: "outline" }) + "items-center ml-4"
             }
-            asChild
           >
             <p className="text-base text-white font-semibold hover:cursor-pointer">Menu</p>
           </SheetTrigger>
 
           <SheetContent side={"left"}>
+            <SheetHeader>
+              <SheetTitle className="text-3xl">
+                Welcome to SCU Course Planner!
+              </SheetTitle>
+            </SheetHeader>
             <ProfilePage></ProfilePage>
           </SheetContent>
         </Sheet>
