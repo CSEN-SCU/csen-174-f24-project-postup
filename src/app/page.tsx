@@ -42,7 +42,7 @@ export default function Home() {
       await signInWithPopup(auth, provider);
       router.push("/")
     } catch (error) {
-      console.error("error signing in");
+      console.error("error signing in:", error);
     }
   }
 

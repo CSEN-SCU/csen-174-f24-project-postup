@@ -7,7 +7,6 @@ import {
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
-import AuthenticationSheet from "../Authentication/AuthenticationSheet";
 import ProfilePage from "@/app/user/page";
 
 interface NavBarProps {
@@ -16,7 +15,7 @@ interface NavBarProps {
   selectedPage: string;
 }
 
-const NavBar: React.FC<NavBarProps> = ({isLoggedIn}) => {
+const NavBar: React.FC<NavBarProps> = ({}) => {
   return (
     <div className="flex flex-row w-full justify-between border-b-2 pb-4 #000">
       {/* Side Sheet */}
