@@ -8,6 +8,7 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import AuthenticationSheet from "../Authentication/AuthenticationSheet";
+import ProfilePage from "@/app/user/page";
 
 interface NavBarProps {
   // For the edge case in the future if a user manages to access this site without an SCU Email (they shouldn't be able to access resources)
@@ -34,10 +35,8 @@ const NavBar: React.FC<NavBarProps> = ({isLoggedIn}) => {
               <SheetTitle className="text-3xl">
                 Welcome to SCU Course Planner!
               </SheetTitle>
-              {/* Once authentication is created, swap the two rendering logic booleans */}
-              {isLoggedIn && <AuthenticationSheet/>}
-              {!isLoggedIn && <p>User Info!!!!!</p>}
             </SheetHeader>
+            <ProfilePage></ProfilePage>
           </SheetContent>
         </Sheet>
       </div>
