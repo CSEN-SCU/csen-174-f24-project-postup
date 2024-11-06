@@ -31,8 +31,8 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
           <SheetContent side={"left"}>
             <SheetHeader>
-              <SheetTitle className="text-3xl">
-                Welcome to SCU Course Planner!
+              <SheetTitle className="text-3xl mb-6">
+                SCU Course Planner
               </SheetTitle>
             </SheetHeader>
             <ProfilePage></ProfilePage>
