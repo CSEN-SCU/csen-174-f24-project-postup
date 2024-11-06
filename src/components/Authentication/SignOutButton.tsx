@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { Button, buttonVariants } from "../ui/button";
 import { getAuth } from "firebase/auth";
