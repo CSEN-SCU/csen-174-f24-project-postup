@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginButton from './LoginButton'
-import SignUpButton from './SignUpButton'
+import SignUpButton from './SignOutButton'
 
 const AuthenticationSheet = () => {
   return (

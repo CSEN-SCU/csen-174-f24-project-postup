@@ -20,6 +20,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, course, season, year }) => 
     fontSize: "1.1em", 
   };
 
+  // Check if course is valid, otherwise don't render
+  if (!course.id) return null;
+
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <h4>{course.name}</h4>

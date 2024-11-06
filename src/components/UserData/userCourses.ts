@@ -17,46 +17,46 @@ export const userCourses = [
   {
     season: "Fall",
     year: "2022",
-    courses: [{ name: "Operating Systems", id: "CSEN 177", unit: "4" }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2023",
-    courses: [{ name: "Programming Languages", id: "CSEN 171", unit: "4" }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2023",
-    courses: [{ name: "Software Engineering", id: "CSEN 174", unit: "4" }],
+    courses: [],
   },
   {
     season: "Fall",
     year: "2023",
-    courses: [{ name: "Operating Systems", id: "CSEN 177", unit: "4" }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2024",
-    courses: [{ name: "Programming Languages", id: "CSEN 171", unit: "4" }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2024",
-    courses: [{ name: "Software Engineering", id: "CSEN 174", unit: "4" }],
+    courses: [],
   },
   {
     season: "Fall",
     year: "2024",
-    courses: [{ name: "Operating Systems", id: "CSEN 177", unit: "4" }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2025",
-    courses: [{ name: "Programming Languages", id: "CSEN 171", unit: "4" }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2025",
-    courses: [{ name: "Software Engineering", id: "CSEN 174", unit: "4" }],
+    courses: [],
   }
 ];
