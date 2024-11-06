@@ -6,10 +6,10 @@ import { userCourses } from "@/components/UserData/userCourses";
 import { CourseData } from "./utils/interfaces";
 import { UserCourseData } from "./utils/types";
 import NavBar from "../components/Navigation/NavBar";
-import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { app } from "./utils/firebase";
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { auth } from "./utils/firebase";
 import { useRouter } from 'next/navigation';
-
+import { signOut } from "../components/Authentication/GoogleSignIn"
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -22,11 +22,17 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
 
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+  useEffect(() =>  {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
+        if (!user?.email?.includes("@scu.edu")) {
+          console.warn("Non-SCU Emails are not allowed");
+          await signOut(); // Sign the user out if domain doesn't match
+          setUser(null);
+          return;
+        }    
         setUser(user);
+
       } else {
         setUser(null);
       }
@@ -35,7 +41,6 @@ export default function Home() {
   }, []);
 
   const signInWithGoogle = async () => {
-    const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
     try {
