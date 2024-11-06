@@ -17,46 +17,46 @@ export const userCourses = [
   {
     season: "Fall",
     year: "2022",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2023",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2023",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Fall",
     year: "2023",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2024",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2024",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Fall",
     year: "2024",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Winter",
     year: "2025",
-    courses: [{ }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2025",
-    courses: [{ }],
+    courses: [],
   }
 ];
