@@ -1,26 +1,47 @@
+"use client"
 import SignOutButton from "@/components/Authentication/SignOutButton";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getUserDocument } from "@/components/UserData/userInfo";
+import { auth } from "../utils/firebase";
+import { DocumentData } from "firebase/firestore";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+
 
 export default function ProfilePage() {
+  const [userInfo, setUserInfo] = useState<DocumentData | null | undefined>(null);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userData = await getUserDocument();
+        setUserInfo(userData);
+      }
+    };
+    
+    fetchUserInfo();
+  }, []);
   return (
     <div className="grid grid-cols-1">
       <div className="flex flex-col items-center">
-        <div className="w-40 h-40 bg-gray-300 rounded-full"></div>
-        <h2 className="text-xl font-bold mt-4">Welcome, John Doe</h2>
+        <Avatar>
+          <AvatarImage src={userInfo?.profilePicture} className="rounded-full"></AvatarImage>
+          <AvatarFallback>User</AvatarFallback>
+        </Avatar>
+        <h2 className="text-xl font-bold mt-4">Welcome, {userInfo?.name}</h2>
       </div>
 
       <div className="shadow-xl p-4 rounded-md border border-gray-100">
         <p className="mt-1">
-          <strong>Email:</strong>{" "}
+          <strong>Email: {userInfo?.email}</strong>{" "}
         </p>
         <p className="mt-1">
           <strong>Student ID #:</strong>{" "}
         </p>
         <p className="mt-1">
-          <strong>Major:</strong>{" "}
+          <strong>Major: {userInfo?.major}</strong>{" "}
         </p>
         <p className="mt-1">
-          <strong>Minor:</strong>{" "}
+          <strong>Minor: {userInfo?.minor}</strong>{" "}
         </p>
         <p className="mt-1">
           <strong>Pathway:</strong>{" "}

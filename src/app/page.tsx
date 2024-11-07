@@ -6,10 +6,12 @@ import { userCourses } from "@/components/UserData/userCourses";
 import { CourseData } from "./utils/interfaces";
 import { UserCourseData } from "./utils/types";
 import NavBar from "../components/Navigation/NavBar";
-import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { app } from "./utils/firebase";
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { auth,db } from "./utils/firebase";
 import { useRouter } from 'next/navigation';
-
+import { signOut } from "../components/Authentication/GoogleSignIn"
+import { Button } from "@/components/ui/button";
+import { doc, setDoc } from "firebase/firestore"; 
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -22,11 +24,18 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
 
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+  useEffect(() =>  {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
+        // If the user somehow gets in our home page without an SCU email
+        if (!user?.email?.includes("@scu.edu")) {
+          console.warn("Non-SCU Emails are not allowed");
+          await signOut(); // Sign the user out if domain doesn't match
+          setUser(null);
+          return;
+        }    
         setUser(user);
+
       } else {
         setUser(null);
       }
@@ -35,11 +44,26 @@ export default function Home() {
   }, []);
 
   const signInWithGoogle = async () => {
-    const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
-
+    provider.setCustomParameters({
+      login_hint: "user@scu.edu",
+    });
     try {
-      await signInWithPopup(auth, provider);
+      const UserCredential = await signInWithPopup(auth, provider);
+      const user = UserCredential.user;
+      
+      // When registering, don't create the user profile if non-SCU
+      if (user?.email?.includes("@scu.edu")) {
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          profilePicture: user.photoURL,
+          major: "n/a",
+          minor: "n/a"
+        });
+      }    
+      else return
       router.push("/")
     } catch (error) {
       console.error("error signing in:", error);
@@ -88,9 +112,15 @@ export default function Home() {
     </div>
       ) : (
         <div className="flex justify-center items-center h-screen">
-            <button onClick={signInWithGoogle} className="px-5 py-2 text-lg bg-blue-500 text-white rounded">
+            <Button onClick={async () => {
+            try {
+                await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
+            } catch (error) {
+                console.error("Error signing in:", error); // Log any errors from sign-in
+            }
+        }} className="px-5 py-2 text-lg bg-blue-500 text-white rounded">
                 Sign in with Google
-            </button>
+            </Button>
         </div>
       )}
     </div>
