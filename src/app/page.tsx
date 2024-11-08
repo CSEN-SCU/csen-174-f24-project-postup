@@ -11,7 +11,9 @@ import { auth,db } from "./utils/firebase";
 import { useRouter } from 'next/navigation';
 import { signOut } from "../components/Authentication/GoogleSignIn"
 import { Button } from "@/components/ui/button";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
+import { Mail } from "lucide-react";
+import sunBackgroundImage from "./scu_mission_sunset.jpeg";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -111,17 +113,26 @@ export default function Home() {
       </div>
     </div>
       ) : (
-        <div className="flex justify-center items-center h-screen">
+        <div 
+          className="flex justify-center items-center h-screen bg-cover bg-center"
+          style={{ backgroundImage: `url(${sunBackgroundImage})` }}
+        >
+          <div className="flex flex-col items-center space-y-4">
             <Button onClick={async () => {
-            try {
-                await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
-            } catch (error) {
-                console.error("Error signing in:", error); // Log any errors from sign-in
-            }
-        }} className="px-5 py-2 text-lg bg-blue-500 text-white rounded">
-                Sign in with Google
+              try {
+                await signInWithGoogle();
+              } catch (error) {
+                console.error("Error signing in:", error);
+              }
+            }} className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg">
+              <div className="text-3xl">
+              <Mail />
+              </div>
+              Sign in with Google
             </Button>
+          </div>
         </div>
+
       )}
     </div>
   );
