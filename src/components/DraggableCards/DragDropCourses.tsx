@@ -72,9 +72,9 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-1/2">
         {/* Render Droppable Quarters */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 ">
           {userPlan.map(({ season, year }) => (
             <DroppableQuarter
               key={`${season}-${year}`}
