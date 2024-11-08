@@ -2,17 +2,17 @@ export const userCourses = [
   {
     season: "Fall",
     year: "2021",
-    courses: [{ name: "Operating Systems", id: "CSEN 177", unit: "4" }],
+    courses: []
   },
   {
     season: "Winter",
     year: "2022",
-    courses: [{ name: "Programming Languages", id: "CSEN 171", unit: "4" }],
+    courses: [],
   },
   {
     season: "Spring",
     year: "2022",
-    courses: [{ name: "Software Engineering", id: "CSEN 174", unit: "4" }],
+    courses: [],
   },
   {
     season: "Fall",

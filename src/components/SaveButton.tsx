@@ -1,23 +1,20 @@
 import React, {useState} from 'react'
 import { Button } from './ui/button'
 import { db } from '@/app/utils/firebase'
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, collection } from "firebase/firestore";
 import { auth } from "@/app/utils/firebase";
-import { UserCourseData } from '@/app/utils/types';
+import { currentUserPlan } from '@/app/utils/types';
 
-
-type currentUserPlan = {
-  userPlan: UserCourseData[];
-}
 
 const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
-  const [saveComplete, setSaveComplete] = useState(false);
+  const [saveComplete, setSaveComplete] = useState<boolean | null>(null);
   const user_id = auth?.currentUser?.uid;
 
   // Function to save plan to firebase.
   const savePlan = async () => {
     try {
-      const docRef = doc(db, "plans", user_id);
+      const collectionRef = collection(db, "plans"); // create a CollectionReference
+      const docRef = doc(collectionRef, user_id);
 
       await setDoc(docRef, {
         plan: userPlan,
@@ -26,15 +23,16 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
 
       console.log("Document written with ID: ", docRef.id);
       setSaveComplete(true); // update save status to true if save was completed
-      setTimeout(() => setSaveComplete(false), 3000); // hide message after 3 seconds
+      setTimeout(() => setSaveComplete(null), 3000); // hide message after 3 seconds
     } catch (error) {
         console.error("Error saving", error)
         setSaveComplete(false); // setting save status to false if save was not complete/error
+        setTimeout(() => setSaveComplete(null), 3000); // hide message after 3 seconds
     }
   };
 
   return (
-    <div>
+    <div className='bg-blue-400'>
         <Button variant="outline" onClick={() => {
         savePlan();
         }}>
@@ -42,7 +40,8 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
                 <p className='text-white'>Save</p>
             </div>
         </Button>
-        {saveComplete && <p className="text-green-500 mt-2">Save complete!</p>}
+        {saveComplete === true && <p className="text-green-500 absolute">Save complete!</p>}
+        {saveComplete === false && <p className="text-red-500">Save Failed!</p>}
     </div>
   )
 }
