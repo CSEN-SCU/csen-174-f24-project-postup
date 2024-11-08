@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { signOut } from "../components/Authentication/GoogleSignIn"
 import { Button } from "@/components/ui/button";
 import { doc, setDoc } from "firebase/firestore"; 
+import SaveButton from "@/components/SaveButton";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -108,6 +109,7 @@ export default function Home() {
           isAddingClass={addingClass}
           userPlan={userPlan}
         />
+        <SaveButton userPlan={userPlan}/>
       </div>
     </div>
       ) : (
