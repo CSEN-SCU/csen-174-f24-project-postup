@@ -17,6 +17,7 @@ export type CourseCardProps = {
   course: Course;
   season: string;
   year: string;
+  handleRemove: (courseId: string, season: string, year: string) => void; 
 };
 
 export type DroppableQuarterProps = {

@@ -2,8 +2,13 @@ import React from "react";
 import { CourseCardProps } from "@/app/utils/types";
 import { useDraggable } from "@dnd-kit/core";
 
-const CourseCard: React.FC<CourseCardProps> = ({ id, course, season, year }) => {
-
+const CourseCard: React.FC<CourseCardProps> = ({
+  id,
+  course,
+  season,
+  year,
+  handleRemove
+}) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id,
     data: { ...course, season, year },
@@ -17,7 +22,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, course, season, year }) => 
     cursor: "grab",
     borderRadius: "6px",
     boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)",
-    fontSize: "1.1em", 
+    fontSize: "1.1em",
   };
 
   // Check if course is valid, otherwise don't render
@@ -25,11 +30,14 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, course, season, year }) => 
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      <h4>{course.name}</h4>
+      <div className="flex flex-row justify-between">
+        <h4>{course.name}</h4>
+        <button onClick={() => handleRemove(course.id, season, year)} className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-full w-4 h-4 items-center"></button>
+      </div>
       <p>Course ID: {course.id}</p>
       <p>Units: {course.unit}</p>
     </div>
   );
-}
+};
 
-export default CourseCard
+export default CourseCard;
