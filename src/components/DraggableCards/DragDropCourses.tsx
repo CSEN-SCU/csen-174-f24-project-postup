@@ -64,7 +64,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
       }
       return quarter;
     });
-
     setUserPlan(updatedQuarters);
   }
 

@@ -32,7 +32,7 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
   };
 
   return (
-    <div className='bg-blue-400'>
+    <div>
         <Button variant="outline" onClick={() => {
         savePlan();
         }}>

@@ -37,6 +37,7 @@ export default function Home() {
           return;
         }
         setUser(user);
+        await fetchPlan();
       } else {
         setUser(null);
       }
@@ -46,9 +47,8 @@ export default function Home() {
 
     return () => {
       unsubscribe();
-      fetchPlan();
     };
-  }, []);
+  }, [user]);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -86,15 +86,12 @@ export default function Home() {
         // Document data is retrieved
         const data = docSnap.data();
         setUserPlan(data?.plan);
-        console.log("Document data:", data);
       } else {
         // Otherwise, create a document
         await setDoc(docRef, {
           plan: userPlan,
           createdAt: new Date(),
         });
-
-        console.log("Document written with ID: ", docRef.id);
       }
     } catch (error) {
       console.error("Error retrieving document", error);
