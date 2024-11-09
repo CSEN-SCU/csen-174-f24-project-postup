@@ -54,6 +54,19 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     }
   };
 
+  const handleRemoveClass = (courseId:string, season:string, year:string) => {
+    const updatedQuarters = userPlan.map((quarter) => {
+      if (quarter.season === season && quarter.year === year) {
+        return {
+          ...quarter,
+          courses: quarter.courses.filter((course) => course.id !== courseId),
+        };
+      }
+      return quarter;
+    });
+    setUserPlan(updatedQuarters);
+  }
+
   const renderCourseCards = (season: string, year: string) => {
     const quarterCourses =
       userPlan.find((q) => q.season === season && q.year === year)?.courses ||
@@ -66,15 +79,16 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
         course={course}
         season={season}
         year={year}
+        handleRemove={handleRemoveClass}
       />
     ));
   };
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-1/2">
         {/* Render Droppable Quarters */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 ">
           {userPlan.map(({ season, year }) => (
             <DroppableQuarter
               key={`${season}-${year}`}

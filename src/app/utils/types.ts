@@ -1,15 +1,15 @@
 // Keep types here, then import them as needed.
 
-export type Course = { 
-  name: string; 
-  id: string; 
-  unit: string 
+export type Course = {
+  name: string;
+  id: string;
+  unit: string;
 };
 
-export type UserCourseData = { 
-  season: string; 
-  year: string; 
-  courses: Course[] 
+export type UserCourseData = {
+  season: string;
+  year: string;
+  courses: Course[];
 };
 
 export type CourseCardProps = {
@@ -17,6 +17,7 @@ export type CourseCardProps = {
   course: Course;
   season: string;
   year: string;
+  handleRemove: (courseId: string, season: string, year: string) => void; 
 };
 
 export type DroppableQuarterProps = {
@@ -24,4 +25,8 @@ export type DroppableQuarterProps = {
   season: string;
   year: string;
   children: React.ReactNode;
+};
+
+export type currentUserPlan = {
+  userPlan: UserCourseData[];
 };

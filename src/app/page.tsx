@@ -7,11 +7,12 @@ import { CourseData } from "./utils/interfaces";
 import { UserCourseData } from "./utils/types";
 import NavBar from "../components/Navigation/NavBar";
 import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
-import { auth,db } from "./utils/firebase";
-import { useRouter } from 'next/navigation';
-import { signOut } from "../components/Authentication/GoogleSignIn"
+import { auth, db } from "./utils/firebase";
+import { useRouter } from "next/navigation";
+import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc, collection } from "firebase/firestore";
+import SaveButton from "@/components/SaveButton";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -24,7 +25,8 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
 
-  useEffect(() =>  {
+  useEffect(() => {
+    // Authentication Checks
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         // If the user somehow gets in our home page without an SCU email
@@ -33,15 +35,20 @@ export default function Home() {
           await signOut(); // Sign the user out if domain doesn't match
           setUser(null);
           return;
-        }    
+        }
         setUser(user);
-
+        await fetchPlan();
       } else {
         setUser(null);
       }
     });
-    return () => unsubscribe();
-  }, []);
+
+    // Sync with user info
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user]);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -51,7 +58,7 @@ export default function Home() {
     try {
       const UserCredential = await signInWithPopup(auth, provider);
       const user = UserCredential.user;
-      
+
       // When registering, don't create the user profile if non-SCU
       if (user?.email?.includes("@scu.edu")) {
         await setDoc(doc(db, "users", user.uid), {
@@ -60,15 +67,36 @@ export default function Home() {
           name: user.displayName,
           profilePicture: user.photoURL,
           major: "n/a",
-          minor: "n/a"
+          minor: "n/a",
         });
-      }    
-      else return
-      router.push("/")
+      } else return;
+      router.push("/");
     } catch (error) {
       console.error("error signing in:", error);
     }
-  }
+  };
+
+  const fetchPlan = async () => {
+    try {
+      const collectionRef = collection(db, "plans"); // create a CollectionReference
+      const docRef = doc(collectionRef, user?.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // Document data is retrieved
+        const data = docSnap.data();
+        setUserPlan(data?.plan);
+      } else {
+        // Otherwise, create a document
+        await setDoc(docRef, {
+          plan: userPlan,
+          createdAt: new Date(),
+        });
+      }
+    } catch (error) {
+      console.error("Error retrieving document", error);
+    }
+  };
 
   const onSubmit = (addedCourse: CourseData) => {
     setUserPlan((prevUserPlan) =>
@@ -94,33 +122,37 @@ export default function Home() {
   return (
     <div>
       {user ? (
-      <div className="flex flex-col">
-      <div className="flex w-full">
-        <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
-      </div>
-      <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <DragDropCourses
-          setSelectedQuarter={setSelectedQuarter}
-          selectedQuarter={selectedQuarter}
-          onSubmit={onSubmit}
-          setUserPlan={setUserPlan}
-          setAddingClass={setAddingClass}
-          isAddingClass={addingClass}
-          userPlan={userPlan}
-        />
-      </div>
-    </div>
+        <div className="flex flex-col">
+          <div className="flex w-full">
+            <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+          </div>
+          <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <DragDropCourses
+              setSelectedQuarter={setSelectedQuarter}
+              selectedQuarter={selectedQuarter}
+              onSubmit={onSubmit}
+              setUserPlan={setUserPlan}
+              setAddingClass={setAddingClass}
+              isAddingClass={addingClass}
+              userPlan={userPlan}
+            />
+            <SaveButton userPlan={userPlan} />
+          </div>
+        </div>
       ) : (
         <div className="flex justify-center items-center h-screen">
-            <Button onClick={async () => {
-            try {
+          <Button
+            onClick={async () => {
+              try {
                 await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
-            } catch (error) {
+              } catch (error) {
                 console.error("Error signing in:", error); // Log any errors from sign-in
-            }
-        }} className="px-5 py-2 text-lg bg-blue-500 text-white rounded">
-                Sign in with Google
-            </Button>
+              }
+            }}
+            className="px-5 py-2 text-lg bg-blue-500 text-white rounded"
+          >
+            Sign in with Google
+          </Button>
         </div>
       )}
     </div>
