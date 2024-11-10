@@ -58,6 +58,9 @@ const config: Config = {
   		},
 			minWidth: {
 				'1/2': '50%'
+			},
+			maxWidth: {
+				'1/2': '50%'
 			}
   	}
   },

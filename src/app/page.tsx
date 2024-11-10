@@ -50,6 +50,7 @@ export default function Home() {
     };
   }, [user]);
 
+  // TODO: Refactor this to a firebase helper file
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
@@ -75,10 +76,11 @@ export default function Home() {
       console.error("error signing in:", error);
     }
   };
-
+  
+  // Gets plan from Firebase Storage
   const fetchPlan = async () => {
     try {
-      const collectionRef = collection(db, "plans"); // create a CollectionReference
+      const collectionRef = collection(db, "plans"); 
       const docRef = doc(collectionRef, user?.uid);
       const docSnap = await getDoc(docRef);
 
