@@ -11,8 +11,8 @@ import { minors } from "./MinorOptions";
 import { pathways } from "./PathwayOptions";
 import { doc, getDoc, updateDoc, collection } from "firebase/firestore";
 import { auth, db } from "@/app/utils/firebase";
-type Props = {};
-const ChangeMajorMinorPath = (props: Props) => {
+
+const ChangeMajorMinorPath = () => {
   const [newMajor, setNewMajor] = useState<string | null>(null);
   const [newMinor, setNewMinor] = useState<string | null>(null);
   const [newPathway, setNewPathway] = useState<string | null>(null);

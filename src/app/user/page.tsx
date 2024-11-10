@@ -1,7 +1,6 @@
 "use client";
 import SignOutButton from "@/components/Authentication/SignOutButton";
 import React, { useEffect, useState } from "react";
-import { getUserDocument } from "@/components/UserData/userInfo";
 import { auth, db } from "../utils/firebase";
 import { DocumentData, doc, collection, onSnapshot } from "firebase/firestore";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
