@@ -31,8 +31,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
   return (
     <div ref={setNodeRef} style={ style }>
       <div className="flex flex-row justify-between" >
-        <h4>{course.name}</h4>
-        <button onClick={() => { handleRemove(course.id, season, year)}} style={{ cursor: 'pointer', pointerEvents: "auto" }} className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-full w-4 h-4 items-center"></button>
+        <h4 {...listeners} {...attributes} style={{ cursor: 'grab' }} >{course.name}</h4>
+        <button onClick={() => { handleRemove(course.id, season, year) }} style={{ cursor: 'pointer', pointerEvents: "auto" }} className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-full w-4 h-4 items-center"></button>
       </div>
       <div {...listeners} {...attributes} style={{ cursor: 'grab' }}>
         <p>Course ID: {course.id}</p>
