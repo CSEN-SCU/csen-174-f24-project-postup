@@ -7,6 +7,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { AddClassTemplateProp } from "@/app/utils/interfaces";
+import { availableCourseList } from "../DummyData/AvailableCourses";
 
 /*
  * This component is the "popup" that appears when a user clicks the "Add Class" button.
@@ -58,27 +59,27 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
 
   return (
     <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
-      <Input
-        ref={inputRefs[0]}
-        placeholder="Course Name"
-        className="text-lg font-semibold w-4/5"
-        onKeyDown={(e) => handleKeyDown(e, 0)}
-      ></Input>
-      <Input
+      <select
         ref={inputRefs[1]}
-        placeholder="Course ID"
         className="mt-2 w-1/2"
-        onKeyDown={(e) => handleKeyDown(e, 1)}
-      ></Input>
+        onChange={(e) => handleSelectChange(e, 1)}
+      >
+        <option value="" disabled selected>
+          Course ID
+        </option>
+        {availableCourseList.map((course) => (
+          <option key={course.course_id} value={course.course_id}>
+            {course.course_id}
+          </option>
+        ))}
+      </select>
       <div className="grid grid-cols-2">
-        <Input
-          ref={inputRefs[2]}
-          placeholder="Units"
-          className="mt-2 w-2/3"
-          onKeyDown={(e) => handleKeyDown(e, 2)}
-        ></Input>
         <div className="justify-end items-end flex">
-          {inputError && <text className="align-middle font-light text-sm underline text-red-600 decoration-red-600 decoration-2">Invalid inputs!</text>}
+          {inputError && (
+            <text className="align-middle font-light text-sm underline text-red-600 decoration-red-600 decoration-2">
+              Invalid inputs!
+            </text>
+          )}
         </div>
       </div>
     </div>
