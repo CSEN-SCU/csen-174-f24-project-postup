@@ -15,7 +15,9 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { doc, setDoc } from "firebase/firestore";
 import { Mail } from "lucide-react";
-import sunBackgroundImage from "./scu_mission_sunset.jpeg";
+import sunBackgroundImage from './scu_mission_sunset.jpeg';
+
+
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -108,7 +110,7 @@ export default function Home() {
       ) : (
         <div
           className="flex justify-center items-center h-screen bg-cover bg-center"
-          style={{ backgroundImage: `url(${sunBackgroundImage})` }}
+          style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
         >
           <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
