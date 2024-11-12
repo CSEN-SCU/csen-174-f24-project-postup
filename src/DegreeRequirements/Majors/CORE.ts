@@ -43,4 +43,10 @@ export const core_reqs_ENGR= [
   {
     req_fulfilled: "Core Explorations :: Science, Technology, and Society"
   },
+  {
+    req_fulfilled: "Integrations :: Experiential Learning for Social Justice (ELSJ)"
+  },
+  {
+    req_fulfilled: "Integrations :: Advanced Writing"
+  },
 ]
