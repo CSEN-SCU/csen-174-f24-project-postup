@@ -57,6 +57,14 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
     }
   };
 
+  // Define the handleSelectChange function
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
+    const selectedValue = e.target.value;
+    if (inputRefs[index].current) {
+      inputRefs[index].current.value = selectedValue;
+    }
+  };
+
   return (
     <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
       <select
@@ -82,6 +90,23 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
           )}
         </div>
       </div>
+      <button
+        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+        onClick={() => {
+          if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
+            onSubmit?.({
+              name: inputRefs[0].current?.value || "",
+              id: inputRefs[1].current?.value || "",
+              unit: inputRefs[2].current?.value || "",
+            });
+          } else {
+            setInputError(true);
+            console.log("ERROR: Submission lacks input");
+          }
+        }}
+      >
+        Add Course
+      </button>
     </div>
   );
 };
