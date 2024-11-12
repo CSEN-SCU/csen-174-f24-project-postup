@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import React, {
   useRef,
   useEffect,
@@ -7,17 +6,20 @@ import React, {
   SetStateAction,
 } from "react";
 import { AddClassTemplateProp } from "@/app/utils/interfaces";
-import { availableCourseList } from "../DummyData/AvailableCourses";
 
 /*
  * This component is the "popup" that appears when a user clicks the "Add Class" button.
  * The goal is to have the user fill out the number of units, course name, and course ID.
  */
 
-const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
+const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
+  onSubmit,
+  availableCourses,
+  setAvailableCourses,
+}) => {
   const inputRefs = [
     useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
+    useRef<HTMLSelectElement>(null),
     useRef<HTMLInputElement>(null),
   ];
 
@@ -34,7 +36,10 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
   });
 
   // Define the handleSelectChange function
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
+  const handleSelectChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number
+  ) => {
     const selectedValue = e.target.value;
     if (inputRefs[index].current) {
       inputRefs[index].current.value = selectedValue;
@@ -44,14 +49,14 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
   return (
     <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
       <select
-        ref={inputRefs[1]}
+        ref={inputRefs[1] as React.RefObject<HTMLSelectElement>}
         className="mt-2 w-1/2"
         onChange={(e) => handleSelectChange(e, 1)}
       >
         <option value="" disabled selected>
           Course ID
         </option>
-        {availableCourseList.map((course) => (
+        {availableCourses.map((course) => (
           <option key={course.course_id} value={course.course_id}>
             {course.course_id}
           </option>
@@ -75,6 +80,13 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
               id: inputRefs[1].current?.value || "",
               unit: inputRefs[2].current?.value || "",
             });
+            const courseNameToRemove = inputRefs[1].current?.value;
+            if (courseNameToRemove) {
+              const updatedAvailableCourses = availableCourses.filter(
+                (course) => course.course_id !== courseNameToRemove
+              );
+              setAvailableCourses(updatedAvailableCourses);
+            }
           } else {
             setInputError(true);
             console.log("ERROR: Submission lacks input");

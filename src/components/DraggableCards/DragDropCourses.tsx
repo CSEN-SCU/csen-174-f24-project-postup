@@ -1,5 +1,5 @@
 // components/DragDropCard.tsx
-import React from "react";
+import React, { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -7,6 +7,7 @@ import AddClassTemplate from "../AddClass/AddClassTemplate";
 import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import { DragDropCardProps } from "@/app/utils/interfaces";
+import { availableCourseList } from "../DummyData/AvailableCourses";
 // Initial course data
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
@@ -18,6 +19,8 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   isAddingClass,
   onSubmit,
 }) => {
+  const [availableCourses, setAvailableCourses] = useState(availableCourseList);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
@@ -54,7 +57,11 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     }
   };
 
-  const handleRemoveClass = (courseId:string, season:string, year:string) => {
+  const handleRemoveClass = (
+    courseId: string,
+    season: string,
+    year: string
+  ) => {
     const updatedQuarters = userPlan.map((quarter) => {
       if (quarter.season === season && quarter.year === year) {
         return {
@@ -65,7 +72,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
       return quarter;
     });
     setUserPlan(updatedQuarters);
-  }
+  };
 
   const renderCourseCards = (season: string, year: string) => {
     const quarterCourses =
@@ -113,8 +120,12 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                 {isAddingClass &&
                   selectedQuarter[0] === season &&
                   selectedQuarter[1] === year && (
-                    <AddClassTemplate onSubmit={onSubmit} />
-                    )}
+                    <AddClassTemplate
+                      onSubmit={onSubmit}
+                      availableCourses={availableCourses}
+                      setAvailableCourses={setAvailableCourses}
+                    />
+                  )}
               </div>
             </DroppableQuarter>
           ))}
