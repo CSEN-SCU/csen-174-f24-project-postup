@@ -33,30 +33,6 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({ onSubmit }) => {
     }
   });
 
-  // This function allows for arrow keys to be used to go up and down input boxes
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    if (e.key === "ArrowDown" && index < inputRefs.length - 1)
-      inputRefs[index + 1]?.current?.focus(); // Move to the next input
-    if (e.key === "ArrowUp" && index > 0)
-      inputRefs[index - 1]?.current?.focus(); // Move to the previous input
-    // TODO: Add a "Submit" button or allow the user to click outside the popup to add classes. Right now, the "Enter" key works.
-    if (e.key === "Enter") {
-      if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
-        onSubmit?.({
-          name: inputRefs[0].current?.value || "",
-          id: inputRefs[1].current?.value || "",
-          unit: inputRefs[2].current?.value || "",
-        });
-      } else {
-        setInputError(true);
-        console.log("ERROR: Submission lacks input");
-      }
-    }
-  };
-
   // Define the handleSelectChange function
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
     const selectedValue = e.target.value;
