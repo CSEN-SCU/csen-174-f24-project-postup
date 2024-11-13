@@ -1,8 +1,8 @@
 import { UserCourseData } from "./types";
 
-/** 
+/**
  * File for all our interfaces. Avoids bloat.
-*/
+ */
 export interface CourseData {
   name: string;
   id: string;
@@ -14,10 +14,26 @@ export interface DragDropCardProps {
   setUserPlan: React.Dispatch<React.SetStateAction<UserCourseData[]>>;
   setAddingClass: React.Dispatch<React.SetStateAction<boolean>>;
   isAddingClass: boolean;
-  selectedQuarter: [string,string];
+  selectedQuarter: [string, string];
   userPlan: UserCourseData[];
   // Function to handle submissions
   onSubmit?: (arg0: CourseData) => void;
+  availableCourses: {
+    course_name: string;
+    course_id: string;
+    units: string;
+    prereqs: string[];
+    coreqs: string[];
+  }[];
+  setAvailableCourses: (
+    arg0: {
+      course_name: string;
+      course_id: string;
+      units: string;
+      prereqs: string[];
+      coreqs: string[];
+    }[]
+  ) => void;
 }
 
 export interface UserCourse {
@@ -35,4 +51,20 @@ export interface AddClassProp {
 
 export interface AddClassTemplateProp {
   onSubmit?: (arg0: CourseData) => void;
+  availableCourses: {
+    course_name: string;
+    course_id: string;
+    units: string;
+    prereqs: string[];
+    coreqs: string[];
+  }[];
+  setAvailableCourses: (
+    arg0: {
+      course_name: string;
+      course_id: string;
+      units: string;
+      prereqs: string[];
+      coreqs: string[];
+    }[]
+  ) => void;
 }

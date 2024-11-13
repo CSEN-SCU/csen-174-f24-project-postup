@@ -13,6 +13,7 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { doc, setDoc, getDoc, collection } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
+import { availableCourseList } from "@/components/DummyData/AvailableCourses";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -24,6 +25,39 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
+  const [availableCourses, setAvailableCourses] = useState(availableCourseList);
+
+  useEffect(() => {
+    console.log(userPlan);
+    const updatedAvailableCourses = availableCourses.filter(
+      (availableCourse) =>
+        !userPlan.some((userQuarter) =>
+          userQuarter.courses.some(
+            (course) => course.id === availableCourse.course_id
+          )
+        )
+    );
+    console.log(updatedAvailableCourses);
+    setAvailableCourses(updatedAvailableCourses);
+  }, [userPlan]);
+
+  /*
+  Array (12)
+0 {season: "Fall", courses: [{unit: "", id: "CSEN 177", name: ""}], year: "2021"}
+1 {year: "2022", season: "Winter", courses: []}
+2 {year: "2022", courses: [], season: "Spring"}
+3 {year: "2022", courses: [], season: "Fall"}
+4 {season: "Winter", courses: [], year: "2023"}
+5 {season: "Spring", year: "2023", courses: []}
+6 {courses: [], year: "2023", season: "Fall"}
+7 {courses: [], year: "2024", season: "Winter"}
+8 {year: "2024", season: "Spring", courses: []}
+9 {courses: [], season: "Fall", year: "2024"}
+10 {season: "Winter", year: "2025", courses: []}
+11 {year: "2025", season: "Spring", courses: []}
+
+Array Prototype
+*/
 
   useEffect(() => {
     // Authentication Checks
@@ -76,11 +110,11 @@ export default function Home() {
       console.error("error signing in:", error);
     }
   };
-  
+
   // Gets plan from Firebase Storage
   const fetchPlan = async () => {
     try {
-      const collectionRef = collection(db, "plans"); 
+      const collectionRef = collection(db, "plans");
       const docRef = doc(collectionRef, user?.uid);
       const docSnap = await getDoc(docRef);
 
@@ -137,6 +171,8 @@ export default function Home() {
               setAddingClass={setAddingClass}
               isAddingClass={addingClass}
               userPlan={userPlan}
+              availableCourses={availableCourses}
+              setAvailableCourses={setAvailableCourses}
             />
             <SaveButton userPlan={userPlan} />
           </div>
