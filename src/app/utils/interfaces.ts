@@ -18,6 +18,22 @@ export interface DragDropCardProps {
   userPlan: UserCourseData[];
   // Function to handle submissions
   onSubmit?: (arg0: CourseData) => void;
+  availableCourses: {
+    course_name: string;
+    course_id: string;
+    units: string;
+    prereqs: string[];
+    coreqs: string[];
+  }[];
+  setAvailableCourses: (
+    arg0: {
+      course_name: string;
+      course_id: string;
+      units: string;
+      prereqs: string[];
+      coreqs: string[];
+    }[]
+  ) => void;
 }
 
 export interface UserCourse {

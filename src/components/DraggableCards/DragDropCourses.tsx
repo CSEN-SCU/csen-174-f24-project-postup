@@ -1,5 +1,4 @@
 // components/DragDropCard.tsx
-import React, { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -7,7 +6,6 @@ import AddClassTemplate from "../AddClass/AddClassTemplate";
 import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import { DragDropCardProps } from "@/app/utils/interfaces";
-import { availableCourseList } from "../DummyData/AvailableCourses";
 // Initial course data
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
@@ -18,8 +16,9 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   setAddingClass,
   isAddingClass,
   onSubmit,
+  availableCourses,
+  setAvailableCourses,
 }) => {
-  const [availableCourses, setAvailableCourses] = useState(availableCourseList);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
