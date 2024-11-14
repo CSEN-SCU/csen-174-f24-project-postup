@@ -161,6 +161,9 @@ Array Prototype
           <div className="flex w-full">
             <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
           </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+            <SaveButton userPlan={userPlan} />
+          </div>
           <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <DragDropCourses
               setSelectedQuarter={setSelectedQuarter}
@@ -200,7 +203,7 @@ Array Prototype
               availableCourses={availableCourses}
               setAvailableCourses={setAvailableCourses}
             />
-            <SaveButton userPlan={userPlan} />
+              // save button
           </div>
         </div>
       ) : (
