@@ -1,5 +1,4 @@
 // components/DragDropCard.tsx
-import React from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -17,7 +16,10 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   setAddingClass,
   isAddingClass,
   onSubmit,
+  availableCourses,
+  setAvailableCourses,
 }) => {
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
@@ -54,6 +56,23 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     }
   };
 
+  const handleRemoveClass = (
+    courseId: string,
+    season: string,
+    year: string
+  ) => {
+    const updatedQuarters = userPlan.map((quarter) => {
+      if (quarter.season === season && quarter.year === year) {
+        return {
+          ...quarter,
+          courses: quarter.courses.filter((course) => course.id !== courseId),
+        };
+      }
+      return quarter;
+    });
+    setUserPlan(updatedQuarters);
+  };
+
   const renderCourseCards = (season: string, year: string) => {
     const quarterCourses =
       userPlan.find((q) => q.season === season && q.year === year)?.courses ||
@@ -66,15 +85,16 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
         course={course}
         season={season}
         year={year}
+        handleRemove={handleRemoveClass}
       />
     ));
   };
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-1/2 max-w-1/2 overflow-scroll">
         {/* Render Droppable Quarters */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 ">
           {userPlan.map(({ season, year }) => (
             <DroppableQuarter
               key={`${season}-${year}`}
@@ -99,8 +119,12 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                 {isAddingClass &&
                   selectedQuarter[0] === season &&
                   selectedQuarter[1] === year && (
-                    <AddClassTemplate onSubmit={onSubmit} />
-                    )}
+                    <AddClassTemplate
+                      onSubmit={onSubmit}
+                      availableCourses={availableCourses}
+                      setAvailableCourses={setAvailableCourses}
+                    />
+                  )}
               </div>
             </DroppableQuarter>
           ))}

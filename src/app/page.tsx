@@ -13,11 +13,10 @@ import { auth, db } from "./utils/firebase";
 import { useRouter } from 'next/navigation';
 import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
-import { doc, setDoc } from "firebase/firestore";
 import { Mail } from "lucide-react";
 import sunBackgroundImage from './scu_mission_sunset.jpeg';
-
-
+import { doc, setDoc, getDoc, collection } from "firebase/firestore";
+import SaveButton from "@/components/SaveButton";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -29,8 +28,42 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
+  const [availableCourses, setAvailableCourses] = useState(availableCourseList);
 
-  useEffect(() =>  {
+  useEffect(() => {
+    console.log(userPlan);
+    const updatedAvailableCourses = availableCourses.filter(
+      (availableCourse) =>
+        !userPlan.some((userQuarter) =>
+          userQuarter.courses.some(
+            (course) => course.id === availableCourse.course_id
+          )
+        )
+    );
+    console.log(updatedAvailableCourses);
+    setAvailableCourses(updatedAvailableCourses);
+  }, [userPlan]);
+
+  /*
+  Array (12)
+0 {season: "Fall", courses: [{unit: "", id: "CSEN 177", name: ""}], year: "2021"}
+1 {year: "2022", season: "Winter", courses: []}
+2 {year: "2022", courses: [], season: "Spring"}
+3 {year: "2022", courses: [], season: "Fall"}
+4 {season: "Winter", courses: [], year: "2023"}
+5 {season: "Spring", year: "2023", courses: []}
+6 {courses: [], year: "2023", season: "Fall"}
+7 {courses: [], year: "2024", season: "Winter"}
+8 {year: "2024", season: "Spring", courses: []}
+9 {courses: [], season: "Fall", year: "2024"}
+10 {season: "Winter", year: "2025", courses: []}
+11 {year: "2025", season: "Spring", courses: []}
+
+Array Prototype
+*/
+
+  useEffect(() => {
+    // Authentication Checks
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         if (!user?.email?.includes("@scu.edu")) {
@@ -38,15 +71,22 @@ export default function Home() {
           await signOut();
           setUser(null);
           return;
-        }    
+        }
         setUser(user);
+        await fetchPlan();
       } else {
         setUser(null);
       }
     });
-    return () => unsubscribe();
-  }, []);
 
+    // Sync with user info
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user]);
+
+  // TODO: Refactor this to a firebase helper file
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
@@ -55,7 +95,7 @@ export default function Home() {
     try {
       const UserCredential = await signInWithPopup(auth, provider);
       const user = UserCredential.user;
-      
+      // When registering, don't create the user profile if non-SCU
       if (user?.email?.includes("@scu.edu")) {
         await setDoc(doc(db, "users", user.uid), {
           uid: user.uid,
@@ -63,12 +103,35 @@ export default function Home() {
           name: user.displayName,
           profilePicture: user.photoURL,
           major: "n/a",
-          minor: "n/a"
+          minor: "n/a",
         });
       } else return;
       router.push("/");
     } catch (error) {
       console.error("error signing in:", error);
+    }
+  };
+
+  // Gets plan from Firebase Storage
+  const fetchPlan = async () => {
+    try {
+      const collectionRef = collection(db, "plans");
+      const docRef = doc(collectionRef, user?.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // Document data is retrieved
+        const data = docSnap.data();
+        setUserPlan(data?.plan);
+      } else {
+        // Otherwise, create a document
+        await setDoc(docRef, {
+          plan: userPlan,
+          createdAt: new Date(),
+        });
+      }
+    } catch (error) {
+      console.error("Error retrieving document", error);
     }
   };
 
@@ -131,6 +194,26 @@ export default function Home() {
               <span>Sign in with Google</span>
             </Button>
           </div>
+              availableCourses={availableCourses}
+              setAvailableCourses={setAvailableCourses}
+            />
+            <SaveButton userPlan={userPlan} />
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <Button
+            onClick={async () => {
+              try {
+                await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
+              } catch (error) {
+                console.error("Error signing in:", error); // Log any errors from sign-in
+              }
+            }}
+            className="px-5 py-2 text-lg bg-blue-500 text-white rounded"
+          >
+            Sign in with Google
+          </Button>
         </div>
       )}
     </div>
