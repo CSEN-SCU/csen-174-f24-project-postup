@@ -1,4 +1,6 @@
-"use client"; // "The component gets prerendered with SSR or ISR/SSG if possible on the server. The html is send to the client and the javascript is send too. So it gets hydrated on the client and is interactive"
+"use client"; 
+// The component is prerendered with SSR or ISR/SSG if possible on the server, 
+// and HTML is sent to the client with JavaScript for hydration.
 
 import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
@@ -8,9 +10,11 @@ import { UserCourseData } from "./utils/types";
 import NavBar from "../components/Navigation/NavBar";
 import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { auth, db } from "./utils/firebase";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
+import { Mail } from "lucide-react";
+import sunBackgroundImage from './scu_mission_sunset.jpeg';
 import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
 
@@ -48,10 +52,9 @@ Array Prototype
     // Authentication Checks
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        // If the user somehow gets in our home page without an SCU email
         if (!user?.email?.includes("@scu.edu")) {
           console.warn("Non-SCU Emails are not allowed");
-          await signOut(); // Sign the user out if domain doesn't match
+          await signOut();
           setUser(null);
           return;
         }
@@ -79,7 +82,6 @@ Array Prototype
     try {
       const UserCredential = await signInWithPopup(auth, provider);
       const user = UserCredential.user;
-
       // When registering, don't create the user profile if non-SCU
       if (user?.email?.includes("@scu.edu")) {
         await setDoc(doc(db, "users", user.uid), {
@@ -139,11 +141,7 @@ Array Prototype
   const onSubmit = (addedCourse: CourseData) => {
     setUserPlan((prevUserPlan) =>
       prevUserPlan.map((quarter) => {
-        // find the matching quarter + year pair. Then add the course to that.
-        if (
-          quarter.season === selectedQuarter[0] &&
-          quarter.year === selectedQuarter[1]
-        ) {
+        if (quarter.season === selectedQuarter[0] && quarter.year === selectedQuarter[1]) {
           return {
             ...quarter,
             courses: [...quarter.courses, addedCourse],
@@ -152,7 +150,6 @@ Array Prototype
         return quarter;
       })
     );
-    // reset the selected quarter and the state of adding classes
     setSelectedQuarter(["", ""]);
     setAddingClass(false);
   };
@@ -173,6 +170,33 @@ Array Prototype
               setAddingClass={setAddingClass}
               isAddingClass={addingClass}
               userPlan={userPlan}
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          className="flex justify-center items-center h-screen bg-cover bg-center"
+          style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
+        >
+          <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
+            <p className="text-lg text-gray-700 text-center">
+              Sign in with your SCU email to access your course planner and manage your academic journey.
+            </p>
+            <Button
+              onClick={async () => {
+                try {
+                  await signInWithGoogle();
+                } catch (error) {
+                  console.error("Error signing in:", error);
+                }
+              }}
+              className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+            >
+              <Mail className="text-3xl" />
+              <span>Sign in with Google</span>
+            </Button>
+          </div>
               availableCourses={availableCourses}
               setAvailableCourses={setAvailableCourses}
             />
