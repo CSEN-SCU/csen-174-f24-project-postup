@@ -54,6 +54,9 @@ export default function ProfilePage() {
           <strong>Email: {userInfo?.email}</strong>{" "}
         </p>
         <p className="mt-1">
+          <strong>Grade Year: {userInfo?.year}</strong>{" "}
+        </p>
+        <p className="mt-1">
           <strong>Major: {userInfo?.major}</strong>{" "}
         </p>
         <p className="mt-1">
@@ -61,6 +64,9 @@ export default function ProfilePage() {
         </p>
         <p className="mt-1">
           <strong>Pathway: {userInfo?.pathway}</strong>{" "}
+        </p>
+        <p className="mt-1">
+          <strong>Standing: {userInfo?.standing}</strong>{" "}
         </p>
         <div className="mt-6 flex space-x-4">
           <Popover>
