@@ -39,20 +39,8 @@ export interface AddClassProp {
 
 export interface AddClassTemplateProp {
   onSubmit?: (arg0: CourseData) => void;
-  availableCourses: {
-    course_name: string;
-    course_id: string;
-    units: string;
-    prereqs: string[];
-    coreqs: string[];
-  }[];
-  setAvailableCourses: (
-    arg0: {
-      course_name: string;
-      course_id: string;
-      units: string;
-      prereqs: string[];
-      coreqs: string[];
-    }[]
-  ) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  availableCourses: { [x: string]: any; };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setAvailableCourses: React.Dispatch<React.SetStateAction<{[x: string]: any;}>>
 }

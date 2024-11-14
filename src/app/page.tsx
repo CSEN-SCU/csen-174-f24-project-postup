@@ -127,10 +127,8 @@ Array Prototype
       const courses = query.docs.map(doc => ({
         ...doc.data(),
       }));
-      console.log(courses)
       setAvailableCourses(courses);
-  
-      console.log(courses)
+      
       return courses;
     } catch (error) {
       console.error("Error fetching courses:", error);
