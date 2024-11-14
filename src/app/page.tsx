@@ -15,7 +15,7 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import sunBackgroundImage from './scu_mission_sunset.jpeg';
-import { doc, setDoc, getDoc, collection } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
 
 export default function Home() {
@@ -28,22 +28,8 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
-  const [availableCourses, setAvailableCourses] = useState(availableCourseList);
-
-  useEffect(() => {
-    console.log(userPlan);
-    const updatedAvailableCourses = availableCourses.filter(
-      (availableCourse) =>
-        !userPlan.some((userQuarter) =>
-          userQuarter.courses.some(
-            (course) => course.id === availableCourse.course_id
-          )
-        )
-    );
-    console.log(updatedAvailableCourses);
-    setAvailableCourses(updatedAvailableCourses);
-  }, [userPlan]);
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [availableCourses, setAvailableCourses] = useState<{[x: string]: any;}>([]);
   /*
   Array (12)
 0 {season: "Fall", courses: [{unit: "", id: "CSEN 177", name: ""}], year: "2021"}
@@ -74,6 +60,7 @@ Array Prototype
         }
         setUser(user);
         await fetchPlan();
+        await getAvailableCourses();
       } else {
         setUser(null);
       }
@@ -134,6 +121,22 @@ Array Prototype
       console.error("Error retrieving document", error);
     }
   };
+
+  const getAvailableCourses = async () => {
+    try {
+      const collectionRef = collection(db, "courses");
+      const query = await getDocs(collectionRef);
+      const courses = query.docs.map(doc => ({
+        ...doc.data(),
+      }));
+      setAvailableCourses(courses);
+      
+      return courses;
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      throw error;
+    }
+  }
 
   const onSubmit = (addedCourse: CourseData) => {
     setUserPlan((prevUserPlan) =>
