@@ -18,11 +18,12 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   setAvailableCourses,
 }) => {
   const inputRefs = [
+    // to get rid of this I need to overhaul this, naurrr
     useRef<HTMLInputElement>(null),
-    useRef<HTMLSelectElement>(null),
-    useRef<HTMLInputElement>(null),
+    useRef<HTMLSelectElement>(null)
   ];
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [selectedClass, setSelectedClass]: [any, Dispatch<SetStateAction<any>>] = useState();
   const [inputError, setInputError]: [
     boolean,
     Dispatch<SetStateAction<boolean>>
@@ -41,6 +42,11 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     index: number
   ) => {
     const selectedValue = e.target.value;
+    // Pure insanity -raph
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const course = availableCourses.find((course:any) => course.courseId === selectedValue);
+    console.log("Incredible", course);
+    setSelectedClass(course); // Store the selected course object in state
     if (inputRefs[index].current) {
       inputRefs[index].current.value = selectedValue;
     }
@@ -50,17 +56,21 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
       <select
         ref={inputRefs[1] as React.RefObject<HTMLSelectElement>}
-        className="mt-2 w-1/2"
+        className="mt-2 w-fit p-3 rounded-md"
         onChange={(e) => handleSelectChange(e, 1)}
       >
         <option value="" disabled selected>
           Course ID
         </option>
-        {availableCourses.map((course) => (
-          <option key={course.course_id} value={course.course_id}>
-            {course.course_id}
-          </option>
-        ))}
+
+        {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          availableCourses.map((course: any) => (
+            <option key={course.courseId} value={course.courseId}>
+              {course.courseListing}
+            </option>
+          ))
+        }
       </select>
       <div className="grid grid-cols-2">
         <div className="justify-end items-end flex">
@@ -76,14 +86,15 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
         onClick={() => {
           if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
             onSubmit?.({
-              name: inputRefs[0].current?.value || "",
+              name: selectedClass?.title || "",
               id: inputRefs[1].current?.value || "",
-              unit: inputRefs[2].current?.value || "",
+              unit: selectedClass?.units || "",
             });
             const courseNameToRemove = inputRefs[1].current?.value;
             if (courseNameToRemove) {
               const updatedAvailableCourses = availableCourses.filter(
-                (course) => course.course_id !== courseNameToRemove
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (course: any) => course.courseId !== courseNameToRemove
               );
               setAvailableCourses(updatedAvailableCourses);
             }
