@@ -3,9 +3,16 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import sentry_sdk
+import os
+
+# Get environment variables
+dsn = os.environ.get('DSN')
+courses_api_url = os.environ.get('COURSES_API_URL')
+sections_api_url = os.environ.get('SECTIONS_API_URL')
+firestore_collection = 'courses'
 
 sentry_sdk.init(
-    dsn="https://699a00b201b650e32d3ddebb4d94d298@o4508167822573568.ingest.us.sentry.io/4508167840989184",
+    dsn=dsn,
     traces_sample_rate=1.0,
 )
 
@@ -54,7 +61,7 @@ def filter_and_transform_courses(courses_api_url, sections_api_url, firestore_co
             filtered_courses.append(filtered_course)
 
     # Initialize Firestore
-    cred = credentials.Certificate('creds.json')
+    cred = credentials.Certificate(json.loads(os.environ.get('FIREBASE_CREDS')))
     firebase_admin.initialize_app(cred)
     db = firestore.client()
 
@@ -68,8 +75,5 @@ def filter_and_transform_courses(courses_api_url, sections_api_url, firestore_co
         batch.commit()
 
 sentry_sdk.profiler.start_profiler()
-courses_api_url = 'https://www.scu.edu/apps/courseavail/export/?file=course.json'
-sections_api_url = 'https://www.scu.edu/apps/courseavail/export/?file=course_section.json'
-firestore_collection = 'courses'
 filter_and_transform_courses(courses_api_url, sections_api_url, firestore_collection)
 sentry_sdk.profiler.stop_profiler()
