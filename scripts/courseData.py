@@ -4,6 +4,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import sentry_sdk
 import os
+import json
 
 # Get environment variables
 dsn = os.environ.get('DSN')
