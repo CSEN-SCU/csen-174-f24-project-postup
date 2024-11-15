@@ -155,73 +155,55 @@ Array Prototype
   };
 
   return (
-    <div>
-      {user ? (
-        <div className="flex flex-col">
-          <div className="flex w-full">
-            <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
-            <SaveButton userPlan={userPlan} />
-          </div>
-          <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <DragDropCourses
-              setSelectedQuarter={setSelectedQuarter}
-              selectedQuarter={selectedQuarter}
-              onSubmit={onSubmit}
-              setUserPlan={setUserPlan}
-              setAddingClass={setAddingClass}
-              isAddingClass={addingClass}
-              userPlan={userPlan}
-            />
-          </div>
-        </div>
-      ) : (
-        <div
-          className="flex justify-center items-center h-screen bg-cover bg-center"
-          style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
-        >
-          <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
-            <p className="text-lg text-gray-700 text-center">
-              Sign in with your SCU email to access your course planner and manage your academic journey.
-            </p>
-            <Button
-              onClick={async () => {
-                try {
-                  await signInWithGoogle();
-                } catch (error) {
-                  console.error("Error signing in:", error);
-                }
-              }}
-              className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+      <div>
+        {user ? (
+            <div className="flex flex-col">
+              <div className="flex w-full">
+                <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+                <SaveButton userPlan={userPlan} />
+              </div>
+              <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+                <DragDropCourses
+                    setSelectedQuarter={setSelectedQuarter}
+                    selectedQuarter={selectedQuarter}
+                    onSubmit={onSubmit}
+                    setUserPlan={setUserPlan}
+                    setAddingClass={setAddingClass}
+                    isAddingClass={addingClass}
+                    userPlan={userPlan}
+                    availableCourses={availableCourses} // Make sure to pass availableCourses
+                    setAvailableCourses={setAvailableCourses}
+                />
+              </div>
+            </div>
+        ) : (
+            <div
+                className="flex justify-center items-center h-screen bg-cover bg-center"
+                style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
             >
-              <Mail className="text-3xl" />
-              <span>Sign in with Google</span>
-            </Button>
-          </div>
-              availableCourses={availableCourses}
-              setAvailableCourses={setAvailableCourses}
-            />
-              // save button
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <Button
-            onClick={async () => {
-              try {
-                await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
-              } catch (error) {
-                console.error("Error signing in:", error); // Log any errors from sign-in
-              }
-            }}
-            className="px-5 py-2 text-lg bg-blue-500 text-white rounded"
-          >
-            Sign in with Google
-          </Button>
-        </div>
-      )}
-    </div>
+              <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
+                <p className="text-lg text-gray-700 text-center">
+                  Sign in with your SCU email to access your course planner and manage your academic journey.
+                </p>
+                <Button
+                    onClick={async () => {
+                      try {
+                        await signInWithGoogle();
+                      } catch (error) {
+                        console.error("Error signing in:", error);
+                      }
+                    }}
+                    className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+                >
+                  <Mail className="text-3xl" />
+                  <span>Sign in with Google</span>
+                </Button>
+              </div>
+            </div>
+        )}
+      </div>
   );
 }
