@@ -1,5 +1,4 @@
 // components/DragDropCard.tsx
-import React from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -17,7 +16,10 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   setAddingClass,
   isAddingClass,
   onSubmit,
+  availableCourses,
+  setAvailableCourses,
 }) => {
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
@@ -54,7 +56,11 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     }
   };
 
-  const handleRemoveClass = (courseId:string, season:string, year:string) => {
+  const handleRemoveClass = (
+    courseId: string,
+    season: string,
+    year: string
+  ) => {
     const updatedQuarters = userPlan.map((quarter) => {
       if (quarter.season === season && quarter.year === year) {
         return {
@@ -65,7 +71,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
       return quarter;
     });
     setUserPlan(updatedQuarters);
-  }
+  };
 
   const renderCourseCards = (season: string, year: string) => {
     const quarterCourses =
@@ -113,8 +119,12 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                 {isAddingClass &&
                   selectedQuarter[0] === season &&
                   selectedQuarter[1] === year && (
-                    <AddClassTemplate onSubmit={onSubmit} />
-                    )}
+                    <AddClassTemplate
+                      onSubmit={onSubmit}
+                      availableCourses={availableCourses}
+                      setAvailableCourses={setAvailableCourses}
+                    />
+                  )}
               </div>
             </DroppableQuarter>
           ))}

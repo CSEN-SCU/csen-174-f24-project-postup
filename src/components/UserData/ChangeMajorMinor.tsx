@@ -6,18 +6,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { years } from "./YearOptions"
 import { majors } from "./MajorOptions";
 import { minors } from "./MinorOptions";
 import { pathways } from "./PathwayOptions";
+import { standings } from "./StandingOptions";
 import { doc, getDoc, updateDoc, collection } from "firebase/firestore";
 import { auth, db } from "@/app/utils/firebase";
 
-const ChangeMajorMinorPath = () => {
+const ChangeYearMajorMinorPathStand = () => {
+  const [newYear, setNewYear] = useState<string | null>(null);
   const [newMajor, setNewMajor] = useState<string | null>(null);
   const [newMinor, setNewMinor] = useState<string | null>(null);
   const [newPathway, setNewPathway] = useState<string | null>(null);
+  const [newStanding, setNewStanding] = useState<string | null>(null);
 
-  const editUserMajorMinorPath = async () => {
+  const editUserYearMajorMinorPathStand = async () => {
     const userId = auth.currentUser?.uid;
     try {
       const collectionRef = collection(db, "users");
@@ -27,9 +31,11 @@ const ChangeMajorMinorPath = () => {
       if (docSnap.exists()) {
         // Don't update fields that the user didnt specify
         const updateData: { [key: string]: string } = {};
+        if (newYear) updateData.year = newYear;
         if (newMajor) updateData.major = newMajor;
         if (newMinor) updateData.minor = newMinor;
         if (newPathway) updateData.pathway = newPathway;
+        if (newStanding) updateData.standing = newStanding;
         
         // only update if there's anything changed
         if (Object.keys(updateData).length > 0) {
@@ -46,6 +52,27 @@ const ChangeMajorMinorPath = () => {
 
   return (
     <div className="flex flex-col">
+      <div>
+        <p className="font-bold">Edit Grade Year:</p>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant={"outline"} className="font-bold text-white">
+              <p>Select a New Grade Year</p>
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            {years.map((years, index) => (
+              <DropdownMenuItem
+                key={index}
+                onClick={() => setNewYear(years.years)}
+              >
+                {years.years}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div>
         <p className="font-bold">Edit Major: </p>
         <DropdownMenu>
@@ -109,14 +136,35 @@ const ChangeMajorMinorPath = () => {
           <Button
             variant={"outline"}
             className="font-bold text-white ml-10 self-end"
-            onClick={() => {editUserMajorMinorPath()}}
+            onClick={() => {editUserYearMajorMinorPathStand()}}
           >
             Save
           </Button>
+        </DropdownMenu>
+      </div>
+      <div>
+        <p className="font-bold">Edit Year Standing:</p>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant={"outline"} className="font-bold text-white">
+              <p>Select a New Year Standing</p>
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            {standings.map((standing, index) => (
+              <DropdownMenuItem
+                key={index}
+                onClick={() => setNewStanding(standing.standing)}
+              >
+                {standing.standing}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </div>
   );
 };
 
-export default ChangeMajorMinorPath;
+export default ChangeYearMajorMinorPathStand;
