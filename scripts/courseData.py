@@ -5,6 +5,7 @@ from firebase_admin import firestore
 import sentry_sdk
 import os
 import json
+import base64
 
 # Get environment variables
 dsn = os.environ.get('DSN')
@@ -62,7 +63,7 @@ def filter_and_transform_courses(courses_api_url, sections_api_url, firestore_co
             filtered_courses.append(filtered_course)
 
     # Initialize Firestore
-    cred = credentials.Certificate(json.loads(os.environ.get('FIREBASE_CREDS')))
+    cred = credentials.Certificate(json.loads(base64.b64decode(os.environ.get('FIREBASE_CREDS')).decode('utf-8')))
     firebase_admin.initialize_app(cred)
     db = firestore.client()
 
