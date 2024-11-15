@@ -3,9 +3,6 @@ name: Update Courses
 on:
   schedule:
     - cron: '0 0 * * *' # Runs every day at midnight
-  pull_request: # Initial testing
-    branches:
-      - develop
 
 jobs:
   update-courses:
