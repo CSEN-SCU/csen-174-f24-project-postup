@@ -15,8 +15,9 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import sunBackgroundImage from './scu_mission_sunset.jpeg';
-import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, onSnapshot, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
+import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -59,7 +60,7 @@ Array Prototype
           return;
         }
         setUser(user);
-        await fetchPlan();
+        await fetchUserPlan(setUserPlan);
         await getAvailableCourses();
       } else {
         setUser(null);
@@ -100,25 +101,24 @@ Array Prototype
   };
 
   // Gets plan from Firebase Storage
-  const fetchPlan = async () => {
+  const fetchUserPlan = async (setUserPlan: Dispatch<SetStateAction<UserCourseData[]>>) => {
+    const userId = auth.currentUser?.uid;
     try {
       const collectionRef = collection(db, "plans");
-      const docRef = doc(collectionRef, user?.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Document data is retrieved
-        const data = docSnap.data();
-        setUserPlan(data?.plan);
-      } else {
-        // Otherwise, create a document
-        await setDoc(docRef, {
-          plan: userPlan,
-          createdAt: new Date(),
-        });
-      }
+      const planDocRef = doc(collectionRef, userId);
+  
+      const listener = onSnapshot(planDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setUserPlan(data?.plan);
+        } 
+        // Otherwise, don't do anything. This code will break if we set that state to an empty value
+      });
+  
+      // Return unsubscribe function to clean up the listener when the component unmounts
+      return listener;
     } catch (error) {
-      console.error("Error retrieving document", error);
+      console.log("Unable to check user info, MajorReqs.tsx", error);
     }
   };
 
@@ -155,73 +155,56 @@ Array Prototype
   };
 
   return (
-    <div>
-      {user ? (
-        <div className="flex flex-col">
-          <div className="flex w-full">
-            <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
-            <SaveButton userPlan={userPlan} />
-          </div>
-          <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <DragDropCourses
-              setSelectedQuarter={setSelectedQuarter}
-              selectedQuarter={selectedQuarter}
-              onSubmit={onSubmit}
-              setUserPlan={setUserPlan}
-              setAddingClass={setAddingClass}
-              isAddingClass={addingClass}
-              userPlan={userPlan}
-            />
-          </div>
-        </div>
-      ) : (
-        <div
-          className="flex justify-center items-center h-screen bg-cover bg-center"
-          style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
-        >
-          <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
-            <p className="text-lg text-gray-700 text-center">
-              Sign in with your SCU email to access your course planner and manage your academic journey.
-            </p>
-            <Button
-              onClick={async () => {
-                try {
-                  await signInWithGoogle();
-                } catch (error) {
-                  console.error("Error signing in:", error);
-                }
-              }}
-              className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+      <div>
+        {user ? (
+            <div className="flex flex-col">
+              <div className="flex w-full">
+                <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+                <SaveButton userPlan={userPlan} />
+              </div>
+              <div className="grid grid-cols-2 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+                <MajorReqs userPlan={userPlan}/>
+                <DragDropCourses
+                    setSelectedQuarter={setSelectedQuarter}
+                    selectedQuarter={selectedQuarter}
+                    onSubmit={onSubmit}
+                    setUserPlan={setUserPlan}
+                    setAddingClass={setAddingClass}
+                    isAddingClass={addingClass}
+                    userPlan={userPlan}
+                    availableCourses={availableCourses} // Make sure to pass availableCourses
+                    setAvailableCourses={setAvailableCourses}
+                />
+              </div>
+            </div>
+        ) : (
+            <div
+                className="flex justify-center items-center h-screen bg-cover bg-center"
+                style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
             >
-              <Mail className="text-3xl" />
-              <span>Sign in with Google</span>
-            </Button>
-          </div>
-              availableCourses={availableCourses}
-              setAvailableCourses={setAvailableCourses}
-            />
-              // save button
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <Button
-            onClick={async () => {
-              try {
-                await signInWithGoogle(); // Runs the signInWithGoogle function when clicked
-              } catch (error) {
-                console.error("Error signing in:", error); // Log any errors from sign-in
-              }
-            }}
-            className="px-5 py-2 text-lg bg-blue-500 text-white rounded"
-          >
-            Sign in with Google
-          </Button>
-        </div>
-      )}
-    </div>
+              <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to SCU Course Planner</h1>
+                <p className="text-lg text-gray-700 text-center">
+                  Sign in with your SCU email to access your course planner and manage your academic journey.
+                </p>
+                <Button
+                    onClick={async () => {
+                      try {
+                        await signInWithGoogle();
+                      } catch (error) {
+                        console.error("Error signing in:", error);
+                      }
+                    }}
+                    className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+                >
+                  <Mail className="text-3xl" />
+                  <span>Sign in with Google</span>
+                </Button>
+              </div>
+            </div>
+        )}
+      </div>
   );
 }
