@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import sunBackgroundImage from './scu_mission_sunset.jpeg';
+import sunBackgroundImage from './scu_sunset.jpg';
 import { doc, setDoc, onSnapshot, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
