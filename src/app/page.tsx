@@ -161,9 +161,13 @@ Array Prototype
               <div className="flex w-full">
                 <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+              {/* Save Button positioned to the right */}
+              <div className="fixed bottom-6 right-6 z-50">
                 <SaveButton userPlan={userPlan} />
               </div>
+              {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+                <SaveButton userPlan={userPlan} />
+              </div> */}
               <div className="grid grid-cols-2 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
                 <MajorReqs userPlan={userPlan}/>
                 <DragDropCourses
