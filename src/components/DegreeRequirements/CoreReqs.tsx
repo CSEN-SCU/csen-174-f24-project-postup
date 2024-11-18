@@ -1,0 +1,101 @@
+/****
+ * This a component that would show the Core Reqs. In case a separate UI has been made for this, I ensured that the functions are easily exported or
+ * moved out.
+ */
+
+// import { auth, db } from "@/app/utils/firebase";
+import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
+// hard-coded this for MVP -- in the future, use dynamic imports
+import { core_reqs_ENGR } from "@/DegreeRequirements/Majors/CORE";
+// import { getDoc, doc, collection } from "firebase/firestore";
+import { UserCourseData, currentUserPlan } from "@/app/utils/types";
+
+// Goal: Retrieve user core requirements, compare to correct json file, do some magic
+// Returns a tuple [reqs_fulfilled: int, reqs_left: string[], total_reqs: int]
+const calculateCoreReqs = (
+  setCoreReqsInfo: Dispatch<SetStateAction<[number, string[], number] | null>>,
+  currentUserClasses: UserCourseData[]
+) => {
+  if (!currentUserClasses) {
+    console.log("no classes");
+    return null;
+  }
+
+  const userCourses = new Set(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    currentUserClasses.flatMap((plan: any) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      plan.courses.map((course: any) => course.id)
+    )
+  );
+
+  // Combine core classes
+  const allRequiredCourseIds = [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...core_reqs_ENGR.flatMap((req: any) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      req.courses.map((course: any) => course.courseId)
+    ),
+  ];
+
+  const fulfilled = allRequiredCourseIds.filter((courseId) =>
+    userCourses.has(courseId)
+  );
+
+  const unmet = allRequiredCourseIds.filter(
+    (courseId) => !userCourses.has(courseId)
+  );
+  console.log("unmet ", unmet);
+
+  const totalReqsLeft = allRequiredCourseIds.length - fulfilled.length;
+
+  setCoreReqsInfo([fulfilled.length, unmet, totalReqsLeft]);
+};
+
+const CoreReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
+  const [coreReqsInfo, setCoreReqsInfo] = useState<
+    [number, string[], number] | null
+  >(null);
+
+  useEffect(() => {
+    if (userPlan) {
+      calculateCoreReqs(setCoreReqsInfo, userPlan);
+    }
+  }, [userPlan]);
+
+  return coreReqsInfo ? (
+    <div>
+      <p className="text-lg font-bold">Core Requirements</p>
+      <p>
+        <span className="font-bold">Requirements Fulfilled: </span>{" "}
+        {coreReqsInfo[0]}
+      </p>
+      <div style={{ maxHeight: "300px", overflowY: "auto", marginTop: "20px" }}>
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {coreReqsInfo[1].length > 0 ? (
+            coreReqsInfo[1].map((courseId, index) => (
+              <li
+                key={index}
+                style={{ padding: "8px", borderBottom: "1px solid #ccc" }}
+              >
+                {courseId}
+              </li>
+            ))
+          ) : (
+            <li>Congrats!!! No unmet requirements</li>
+          )}
+        </ul>
+      </div>
+      <p>
+        <span className="font-bold">Classes left to take:</span>{" "}
+        {coreReqsInfo[2]}
+      </p>
+    </div>
+  ) : (
+    <div>
+      <p> Oops! Something went entirely wrong </p>
+    </div>
+  );
+};
+
+export default CoreReqs;

@@ -18,6 +18,7 @@ import sunBackgroundImage from './scu_sunset.jpg';
 import { doc, setDoc, onSnapshot, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
+import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -169,7 +170,10 @@ Array Prototype
                 <SaveButton userPlan={userPlan} />
               </div> */}
               <div className="grid grid-cols-2 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-                <MajorReqs userPlan={userPlan}/>
+                <div className="flex flex-col">
+                  <MajorReqs userPlan={userPlan}/>
+                  <CoreReqs userPlan={userPlan} />
+                </div>
                 <DragDropCourses
                     setSelectedQuarter={setSelectedQuarter}
                     selectedQuarter={selectedQuarter}
