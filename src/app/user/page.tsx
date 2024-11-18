@@ -26,7 +26,7 @@ export default function ProfilePage() {
           setUserInfo(docSnapshot.data());
         }
       });
-      
+
       return () => unsubscribe();
     } else {
       console.log(
