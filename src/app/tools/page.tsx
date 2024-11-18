@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardContent,
   CardTitle,
-  CardDescription,
+  //CardDescription, // Unused; uncomment if needed
 } from "@/components/ui/card";
 import NavBar from "../../components/Navigation/NavBar";
 
@@ -150,12 +150,12 @@ const ToolsAndUsefulLinks = () => {
                 <div className="space-y-6">
                   <div className="p-4 bg-blue-50 rounded-lg">
                     <p className="text-gray-700 italic">
-                      "Peer Advisor A says: ..."
+                      &quot;Peer Advisor A says: ...&quot;
                     </p>
                   </div>
                   <div className="p-4 bg-blue-50 rounded-lg">
                     <p className="text-gray-700 italic">
-                      "Peer Advisor B says: ..."
+                      &quot;Peer Advisor B says: ...&quot;
                     </p>
                   </div>
                 </div>

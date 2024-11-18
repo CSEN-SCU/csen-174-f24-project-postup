@@ -3,37 +3,37 @@ services:
   - name: scucourseplannerdevelop
     envs:
       - key: SENTRY_AUTH_TOKEN
-        value: ${SENTRY_AUTH_TOKEN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wIt0gBp/kQutiyfHtERk4YConKe55r1K:sb7XsjaFcOsEqf0h2CDhVA==]
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
-        value: ${NEXT_PUBLIC_FIREBASE_API_KEY}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:garC4IlarA0LnqX3b4lJSsIb14ACPekM:YxKEDyQ1DZP2lpG2qkl0EA==]
       - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-        value: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:uD7zR0efHoCx2+IJkdGW12EZmzTLSMSo:mEvAQnE4UQonZbstvRkesQ==]
       - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wKJXx3v3l0Vo7nn543SLfqpsnDjGBAzd:+1OpGpPngMJCGOtLwIbP+A==]
       - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-        value: ${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:v4Xji/Z0UjKVBTG3vIIn5x8158fn/y/6:14mSWrhLoOvjMZTQxRJc0Q==]
       - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:U3y81A7ZKNoxh3IqH9QKgMX856SlyXwL:nlwmEP1hCJnoj2z08DylJA==]
       - key: NEXT_PUBLIC_FIREBASE_APP_ID
-        value: ${NEXT_PUBLIC_FIREBASE_APP_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:OmDJ6KFEVM9r4RCiGXOBs0cXTYsW3TD9:H1xmspxhzfimuEpjdtVQYw==]
       - key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:aG8NR7eC6L/VgsE4GZcQn9bwo2BIAdGn:W3yQ7/LoTCXyOf2g2e0fDA==]
     github:
       branch: develop
       repo: csen-scu/scu-course-planner
@@ -44,37 +44,37 @@ services:
   - name: scucourseplannermain
     envs:
       - key: SENTRY_AUTH_TOKEN
-        value: ${SENTRY_AUTH_TOKEN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wIt0gBp/kQutiyfHtERk4YConKe55r1K:sb7XsjaFcOsEqf0h2CDhVA==]
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
-        value: ${NEXT_PUBLIC_FIREBASE_API_KEY}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:garC4IlarA0LnqX3b4lJSsIb14ACPekM:YxKEDyQ1DZP2lpG2qkl0EA==]
       - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-        value: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:uD7zR0efHoCx2+IJkdGW12EZmzTLSMSo:mEvAQnE4UQonZbstvRkesQ==]
       - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wKJXx3v3l0Vo7nn543SLfqpsnDjGBAzd:+1OpGpPngMJCGOtLwIbP+A==]
       - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-        value: ${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:v4Xji/Z0UjKVBTG3vIIn5x8158fn/y/6:14mSWrhLoOvjMZTQxRJc0Q==]
       - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:U3y81A7ZKNoxh3IqH9QKgMX856SlyXwL:nlwmEP1hCJnoj2z08DylJA==]
       - key: NEXT_PUBLIC_FIREBASE_APP_ID
-        value: ${NEXT_PUBLIC_FIREBASE_APP_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:OmDJ6KFEVM9r4RCiGXOBs0cXTYsW3TD9:H1xmspxhzfimuEpjdtVQYw==]
       - key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:aG8NR7eC6L/VgsE4GZcQn9bwo2BIAdGn:W3yQ7/LoTCXyOf2g2e0fDA==]
     github:
       branch: main
       repo: csen-scu/scu-course-planner
@@ -85,37 +85,37 @@ services:
   - name: scucourseplannerpr
     envs:
       - key: SENTRY_AUTH_TOKEN
-        value: ${SENTRY_AUTH_TOKEN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wIt0gBp/kQutiyfHtERk4YConKe55r1K:sb7XsjaFcOsEqf0h2CDhVA==]
       - key: NEXT_PUBLIC_FIREBASE_API_KEY
-        value: ${NEXT_PUBLIC_FIREBASE_API_KEY}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:garC4IlarA0LnqX3b4lJSsIb14ACPekM:YxKEDyQ1DZP2lpG2qkl0EA==]
       - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-        value: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:uD7zR0efHoCx2+IJkdGW12EZmzTLSMSo:mEvAQnE4UQonZbstvRkesQ==]
       - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:wKJXx3v3l0Vo7nn543SLfqpsnDjGBAzd:+1OpGpPngMJCGOtLwIbP+A==]
       - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-        value: ${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:v4Xji/Z0UjKVBTG3vIIn5x8158fn/y/6:14mSWrhLoOvjMZTQxRJc0Q==]
       - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:U3y81A7ZKNoxh3IqH9QKgMX856SlyXwL:nlwmEP1hCJnoj2z08DylJA==]
       - key: NEXT_PUBLIC_FIREBASE_APP_ID
-        value: ${NEXT_PUBLIC_FIREBASE_APP_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:OmDJ6KFEVM9r4RCiGXOBs0cXTYsW3TD9:H1xmspxhzfimuEpjdtVQYw==]
       - key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-        value: ${NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID}
         scope: RUN_AND_BUILD_TIME
         type: SECRET
+        value: EV[1:aG8NR7eC6L/VgsE4GZcQn9bwo2BIAdGn:W3yQ7/LoTCXyOf2g2e0fDA==]
     github:
       branch: develop
       repo: csen-scu/scu-course-planner
