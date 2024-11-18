@@ -21,7 +21,6 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
         createdAt: new Date(),
       });
 
-      console.log("Document written with ID: ", docRef.id);
       setSaveComplete(true); // update save status to true if save was completed
       setTimeout(() => setSaveComplete(null), 3000); // hide message after 3 seconds
     } catch (error) {

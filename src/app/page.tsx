@@ -15,8 +15,9 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import sunBackgroundImage from './scu_mission_sunset.jpeg';
-import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, onSnapshot, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
+import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -59,7 +60,7 @@ Array Prototype
           return;
         }
         setUser(user);
-        await fetchPlan();
+        await fetchUserPlan(setUserPlan);
         await getAvailableCourses();
       } else {
         setUser(null);
@@ -100,25 +101,24 @@ Array Prototype
   };
 
   // Gets plan from Firebase Storage
-  const fetchPlan = async () => {
+  const fetchUserPlan = async (setUserPlan: Dispatch<SetStateAction<UserCourseData[]>>) => {
+    const userId = auth.currentUser?.uid;
     try {
       const collectionRef = collection(db, "plans");
-      const docRef = doc(collectionRef, user?.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Document data is retrieved
-        const data = docSnap.data();
-        setUserPlan(data?.plan);
-      } else {
-        // Otherwise, create a document
-        await setDoc(docRef, {
-          plan: userPlan,
-          createdAt: new Date(),
-        });
-      }
+      const planDocRef = doc(collectionRef, userId);
+  
+      const listener = onSnapshot(planDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setUserPlan(data?.plan);
+        } 
+        // Otherwise, don't do anything. This code will break if we set that state to an empty value
+      });
+  
+      // Return unsubscribe function to clean up the listener when the component unmounts
+      return listener;
     } catch (error) {
-      console.error("Error retrieving document", error);
+      console.log("Unable to check user info, MajorReqs.tsx", error);
     }
   };
 
@@ -164,7 +164,8 @@ Array Prototype
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
                 <SaveButton userPlan={userPlan} />
               </div>
-              <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+              <div className="grid grid-cols-2 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+                <MajorReqs userPlan={userPlan}/>
                 <DragDropCourses
                     setSelectedQuarter={setSelectedQuarter}
                     selectedQuarter={selectedQuarter}

@@ -45,7 +45,6 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     // Pure insanity -raph
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const course = availableCourses.find((course:any) => course.courseId === selectedValue);
-    console.log("Incredible", course);
     setSelectedClass(course); // Store the selected course object in state
     if (inputRefs[index].current) {
       inputRefs[index].current.value = selectedValue;
