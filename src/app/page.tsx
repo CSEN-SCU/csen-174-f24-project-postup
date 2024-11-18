@@ -17,6 +17,7 @@ import { Mail } from "lucide-react";
 import sunBackgroundImage from './scu_mission_sunset.jpeg';
 import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
+import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -164,7 +165,8 @@ Array Prototype
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
                 <SaveButton userPlan={userPlan} />
               </div>
-              <div className="grid items-start justify-items-end min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+              <div className="grid grid-cols-2 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+                <MajorReqs/>
                 <DragDropCourses
                     setSelectedQuarter={setSelectedQuarter}
                     selectedQuarter={selectedQuarter}
