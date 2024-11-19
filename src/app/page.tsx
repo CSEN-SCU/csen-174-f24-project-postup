@@ -25,6 +25,7 @@ import SaveButton from "@/components/SaveButton";
 import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 import CourseStatsCard from "@/components/CourseStatsCard";
+import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -157,6 +158,14 @@ export default function Home() {
             {/* Course Stats Card */}
             <div style={{ marginBottom: '20px' }}>
               <CourseStatsCard userPlan={userPlan} />
+
+          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
+                <SaveButton userPlan={userPlan} />
+              </div> */}
+          <div className="grid grid-cols-5 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+            <div className="col-span-1">
+              <MajorReqs userPlan={userPlan} />
+              <CoreReqs userPlan={userPlan} />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               <div className="col-span-1 space-y-8">

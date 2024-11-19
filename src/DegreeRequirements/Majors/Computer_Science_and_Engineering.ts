@@ -1,4 +1,3 @@
-
 export const requirements = [
   {
     // Main requirements, need to fulfill all
@@ -177,53 +176,53 @@ export const requirements = [
     electiveClasses: [
       {
         courseId: "CSEN_120",
-        additional: "CSEN_120L"
+        additional: "CSEN_120L",
       },
       {
         courseId: "CSEN_123",
-        additional: "CSEN_123L"
+        additional: "CSEN_123L",
       },
       {
         courseId: "CSEN_127",
-        additional: "CSEN_127L"
+        additional: "CSEN_127L",
       },
       {
         courseId: "CSEN_129",
       },
       {
         courseId: "CSEN_140",
-        additional: "CSEN_140L"
+        additional: "CSEN_140L",
       },
       {
         courseId: "CSEN_143",
-        additional: "CSEN_143L"
+        additional: "CSEN_143L",
       },
       {
         courseId: "CSEN_145",
-        additional: "CSEN_145L"
+        additional: "CSEN_145L",
       },
       {
         courseId: "CSEN_146",
-        additional: "CSEN_146L"
+        additional: "CSEN_146L",
       },
       {
         courseId: "CSEN_148",
       },
       {
         courseId: "CSEN_150",
-        additional: "CSEN_150L"
+        additional: "CSEN_150L",
       },
       {
         courseId: "CSEN_152",
-        additional: "CSEN_152L"
+        additional: "CSEN_152L",
       },
       {
         courseId: "CSEN_160",
-        additional: "CSEN_160L"
+        additional: "CSEN_160L",
       },
       {
         courseId: "CSEN_161",
-        additional: "CSEN_161L"
+        additional: "CSEN_161L",
       },
       {
         courseId: "CSEN_162",
@@ -233,25 +232,25 @@ export const requirements = [
       },
       {
         courseId: "CSEN_164",
-        additional: "CSEN_164L"
+        additional: "CSEN_164L",
       },
       {
         courseId: "CSEN_165",
       },
       {
         courseId: "CSEN_166",
-        additional: "CSEN_166L"
+        additional: "CSEN_166L",
       },
       {
         courseId: "CSEN_168",
-        additional: "CSEN_168L"
+        additional: "CSEN_168L",
       },
       {
         courseId: "CSEN_169",
       },
       {
         courseId: "CSEN_178",
-        additional: "CSEN_178L"
+        additional: "CSEN_178L",
       },
       {
         courseId: "CSEN_180",
