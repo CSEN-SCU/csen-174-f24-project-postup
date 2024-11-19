@@ -7,12 +7,18 @@
 import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
 // hard-coded this for MVP -- in the future, use dynamic imports
 import { core_reqs_ENGR } from "@/DegreeRequirements/Majors/CORE";
-// import { getDoc, doc, collection } from "firebase/firestore";
+import {
+  getFirestore,
+  getDocs,
+  query,
+  collection,
+  where,
+} from "firebase/firestore";
 import { UserCourseData, currentUserPlan } from "@/app/utils/types";
 
 // Goal: Retrieve user core requirements, compare to correct json file, do some magic
 // Returns a tuple [reqs_fulfilled: int, reqs_left: string[], total_reqs: int]
-const calculateCoreReqs = (
+const calculateCoreReqs = async (
   setCoreReqsInfo: Dispatch<SetStateAction<[number, string[], number] | null>>,
   currentUserClasses: UserCourseData[]
 ) => {
@@ -38,14 +44,34 @@ const calculateCoreReqs = (
     ),
   ];
 
-  const fulfilled = allRequiredCourseIds.filter((courseId) =>
-    userCourses.has(courseId)
-  );
+  const db = getFirestore();
 
-  const unmet = allRequiredCourseIds.filter(
-    (courseId) => !userCourses.has(courseId)
-  );
-  console.log("unmet ", unmet);
+  const fulfilled = [];
+  const unmet = [];
+  for (const course of allRequiredCourseIds) {
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, "courses"),
+        where("courseTags", "array-contains", course)
+      )
+    );
+
+    console.log(querySnapshot.docs);
+
+    let found = false;
+    for (const doc of querySnapshot.docs) {
+      console.log(doc.id, " => ", doc.data());
+      if (userCourses.has(doc.id)) {
+        fulfilled.push(course);
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      unmet.push(course);
+    }
+  }
 
   const totalReqsLeft = allRequiredCourseIds.length - fulfilled.length;
 
