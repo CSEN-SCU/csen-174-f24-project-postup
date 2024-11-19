@@ -24,6 +24,7 @@ import {
 } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
+import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [

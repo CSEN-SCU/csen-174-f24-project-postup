@@ -15,15 +15,20 @@ import { AddClassTemplateProp } from "@/app/utils/interfaces";
 const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   onSubmit,
   availableCourses,
-  setAvailableCourses,
+  userPlan,
 }) => {
   const inputRefs = [
     // to get rid of this I need to overhaul this, naurrr
     useRef<HTMLInputElement>(null),
-    useRef<HTMLSelectElement>(null)
+    useRef<HTMLSelectElement>(null),
   ];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [selectedClass, setSelectedClass]: [any, Dispatch<SetStateAction<any>>] = useState();
+  const [selectedClass, setSelectedClass]: [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Dispatch<SetStateAction<any>>
+  ] = useState();
   const [inputError, setInputError]: [
     boolean,
     Dispatch<SetStateAction<boolean>>
@@ -43,8 +48,11 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   ) => {
     const selectedValue = e.target.value;
     // Pure insanity -raph
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const course = availableCourses.find(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const course = availableCourses.find((course:any) => course.courseId === selectedValue);
+      (course: any) => course.courseId === selectedValue
+    );
     setSelectedClass(course); // Store the selected course object in state
     if (inputRefs[index].current) {
       inputRefs[index].current.value = selectedValue;
@@ -83,20 +91,20 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
       <button
         className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
         onClick={() => {
+          for (const quart of userPlan) {
+            for (const course of quart.courses) {
+              if (course.id === inputRefs[1].current?.value) {
+                console.log("Cannot add a duplicate course.");
+                return;
+              }
+            }
+          }
           if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
             onSubmit?.({
               name: selectedClass?.title || "",
               id: inputRefs[1].current?.value || "",
               unit: selectedClass?.units || "",
             });
-            const courseNameToRemove = inputRefs[1].current?.value;
-            if (courseNameToRemove) {
-              const updatedAvailableCourses = availableCourses.filter(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (course: any) => course.courseId !== courseNameToRemove
-              );
-              setAvailableCourses(updatedAvailableCourses);
-            }
           } else {
             setInputError(true);
             console.log("ERROR: Submission lacks input");

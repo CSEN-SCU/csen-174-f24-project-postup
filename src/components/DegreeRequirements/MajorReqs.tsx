@@ -63,7 +63,6 @@ const calculateMajorReqs = (
   const unmet = allRequiredCourseIds.filter(
     (courseId) => !userCourses.has(courseId)
   );
-  console.log("unmet ", unmet);
 
   const totalReqsLeft = allRequiredCourseIds.length - fulfilled.length;
 
