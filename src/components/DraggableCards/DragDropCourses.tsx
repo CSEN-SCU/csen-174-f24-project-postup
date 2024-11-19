@@ -1,4 +1,3 @@
-// components/DragDropCard.tsx
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { Course, UserCourseData } from "@/app/utils/types";
 import AddClass from "../AddClass/AddClass";
@@ -6,7 +5,6 @@ import AddClassTemplate from "../AddClass/AddClassTemplate";
 import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import { DragDropCardProps } from "@/app/utils/interfaces";
-// Initial course data
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
   setSelectedQuarter,
@@ -19,7 +17,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   availableCourses,
   setAvailableCourses,
 }) => {
-
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || !active.data.current) return;
