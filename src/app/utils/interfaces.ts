@@ -19,9 +19,11 @@ export interface DragDropCardProps {
   // Function to handle submissions
   onSubmit?: (arg0: CourseData) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  availableCourses: { [x: string]: any; };
+  availableCourses: { [x: string]: any };
+  setAvailableCourses: React.Dispatch<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setAvailableCourses: React.Dispatch<React.SetStateAction<{[x: string]: any;}>>
+    React.SetStateAction<{ [x: string]: any }>
+  >;
 }
 
 export interface UserCourse {
@@ -40,7 +42,11 @@ export interface AddClassProp {
 export interface AddClassTemplateProp {
   onSubmit?: (arg0: CourseData) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  availableCourses: { [x: string]: any; };
+  availableCourses: { [x: string]: any };
+  setAvailableCourses: React.Dispatch<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    React.SetStateAction<{ [x: string]: any }>
+  >;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   userPlan: any;
 }
