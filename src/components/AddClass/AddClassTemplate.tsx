@@ -17,13 +17,13 @@ import { AddClassTemplateProp } from "@/app/utils/interfaces";
 const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   onSubmit,
   availableCourses,
-  userPlan,
+  setAvailableCourses
 }) => {
   const inputRefs = useRef<HTMLInputElement>(null);
   const [selectedClass, setSelectedClass]: [
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Dispatch<SetStateAction<any>>
   ] = useState();
   const [inputError, setInputError]: [
@@ -42,7 +42,8 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase();
     setFilteredCourses(
-      availableCourses.filter((course) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      availableCourses.filter((course: any) =>
         course.courseListing.toLowerCase().includes(lowerCaseQuery)
       )
     );
@@ -54,7 +55,13 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     setSearchQuery(course.courseListing); // Update search input with the selected course
   };
 
-  const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
+  const Row = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: React.CSSProperties;
+  }) => {
     const course = filteredCourses[index];
     return (
       <div
