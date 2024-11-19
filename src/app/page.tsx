@@ -35,8 +35,8 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [availableCourses, setAvailableCourses] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
   }>([]);
   /*
