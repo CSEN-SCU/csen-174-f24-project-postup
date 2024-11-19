@@ -5,6 +5,8 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import { AddClassTemplateProp } from "@/app/utils/interfaces";
 
 /*
@@ -17,60 +19,99 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   availableCourses,
   setAvailableCourses,
 }) => {
-  const inputRefs = [
-    // to get rid of this I need to overhaul this, naurrr
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLSelectElement>(null)
-  ];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [selectedClass, setSelectedClass]: [any, Dispatch<SetStateAction<any>>] = useState();
+  const inputRefs = useRef<HTMLInputElement>(null);
+  const [selectedClass, setSelectedClass]: [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+    Dispatch<SetStateAction<any>>
+  ] = useState();
   const [inputError, setInputError]: [
     boolean,
     Dispatch<SetStateAction<boolean>>
   ] = useState(false);
 
+  // Search input states
+  const [filteredCourses, setFilteredCourses] = useState(availableCourses);
+  const [searchQuery, setSearchQuery] = useState("");
   // On component render, this will focus on the first input box
   useEffect(() => {
-    if (inputRefs[0].current) {
-      inputRefs[0].current.focus();
-    }
-  });
+    inputRefs.current?.focus();
+  }, []);
 
-  // Define the handleSelectChange function
-  const handleSelectChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    index: number
-  ) => {
-    const selectedValue = e.target.value;
-    // Pure insanity -raph
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const course = availableCourses.find((course:any) => course.courseId === selectedValue);
-    setSelectedClass(course); // Store the selected course object in state
-    if (inputRefs[index].current) {
-      inputRefs[index].current.value = selectedValue;
+  useEffect(() => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    setFilteredCourses(
+      availableCourses.filter((course) =>
+        course.courseListing.toLowerCase().includes(lowerCaseQuery)
+      )
+    );
+  }, [searchQuery, availableCourses]);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSelectCourse = (course: any) => {
+    setSelectedClass(course);
+    setSearchQuery(course.courseListing); // Update search input with the selected course
+  };
+
+  const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => {
+    const course = filteredCourses[index];
+    return (
+      <div
+        style={style}
+        className="cursor-pointer p-2 hover:bg-gray-200"
+        onClick={() => handleSelectCourse(course)}
+      >
+        {course.courseListing}
+      </div>
+    );
+  };
+
+  const handleAddCourse = () => {
+    if (selectedClass) {
+      onSubmit?.({
+        name: selectedClass.title || "",
+        id: selectedClass.courseId || "",
+        unit: selectedClass.units || "",
+      });
+      const updatedAvailableCourses = availableCourses.filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (course: any) => course.courseId !== selectedClass.courseId
+      );
+      setAvailableCourses(updatedAvailableCourses);
+      setSelectedClass(null);
+      setSearchQuery("");
+    } else {
+      setInputError(true);
+      console.log("ERROR: Submission lacks input");
     }
   };
 
   return (
     <div className="border-2 #000 border-dashed p-4 rounded-md shadow-md px-8 mt-2 bg-slate-50 max-w-64 self-center">
-      <select
-        ref={inputRefs[1] as React.RefObject<HTMLSelectElement>}
-        className="mt-2 w-fit p-3 rounded-md"
-        onChange={(e) => handleSelectChange(e, 1)}
-      >
-        <option value="" disabled selected>
-          Course ID
-        </option>
-
-        {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          availableCourses.map((course: any) => (
-            <option key={course.courseId} value={course.courseId}>
-              {course.courseListing}
-            </option>
-          ))
-        }
-      </select>
+      <input
+        ref={inputRefs}
+        type="text"
+        placeholder="Search for a course..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded-md mb-2"
+      />
+      <div className="h-48 border border-gray-300 rounded-md overflow-hidden">
+        <AutoSizer>
+          {({ height, width }: { height: number; width: number }) => (
+            <List
+              height={height}
+              itemCount={filteredCourses.length}
+              itemSize={35}
+              width={width}
+            >
+              {Row}
+            </List>
+          )}
+        </AutoSizer>
+      </div>
       <div className="grid grid-cols-2">
         <div className="justify-end items-end flex">
           {inputError && (
@@ -81,27 +122,8 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
         </div>
       </div>
       <button
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-        onClick={() => {
-          if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
-            onSubmit?.({
-              name: selectedClass?.title || "",
-              id: inputRefs[1].current?.value || "",
-              unit: selectedClass?.units || "",
-            });
-            const courseNameToRemove = inputRefs[1].current?.value;
-            if (courseNameToRemove) {
-              const updatedAvailableCourses = availableCourses.filter(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (course: any) => course.courseId !== courseNameToRemove
-              );
-              setAvailableCourses(updatedAvailableCourses);
-            }
-          } else {
-            setInputError(true);
-            console.log("ERROR: Submission lacks input");
-          }
-        }}
+        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded w-full"
+        onClick={handleAddCourse}
       >
         Add Course
       </button>
