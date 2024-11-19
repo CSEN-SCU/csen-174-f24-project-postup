@@ -185,6 +185,7 @@ Array Prototype
           <div className="grid grid-cols-5 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <div className="col-span-1">
               <MajorReqs userPlan={userPlan} />
+              <CoreReqs userPlan={userPlan} />
             </div>
             <div className="col-span-4">
               <DragDropCourses
