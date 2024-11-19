@@ -56,8 +56,6 @@ const calculateCoreReqs = async (
       )
     );
 
-    console.log(querySnapshot.docs);
-
     let found = false;
     for (const doc of querySnapshot.docs) {
       console.log(doc.id, " => ", doc.data());
