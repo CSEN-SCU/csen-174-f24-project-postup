@@ -1,8 +1,5 @@
 "use client";
-// The component is prerendered with SSR or ISR/SSG if possible on the server,
-// and HTML is sent to the client with JavaScript for hydration.
 
-import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
 import { userCourses } from "@/components/UserData/userCourses";
 import { CourseData } from "./utils/interfaces";
@@ -23,7 +20,9 @@ import {
   getDocs,
 } from "firebase/firestore";
 import SaveButton from "@/components/SaveButton";
+import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
+import CourseStatsCard from "@/components/CourseStatsCard";
 import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
 
 export default function Home() {
@@ -40,26 +39,8 @@ export default function Home() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
   }>([]);
-  /*
-  Array (12)
-0 {season: "Fall", courses: [{unit: "", id: "CSEN 177", name: ""}], year: "2021"}
-1 {year: "2022", season: "Winter", courses: []}
-2 {year: "2022", courses: [], season: "Spring"}
-3 {year: "2022", courses: [], season: "Fall"}
-4 {season: "Winter", courses: [], year: "2023"}
-5 {season: "Spring", year: "2023", courses: []}
-6 {courses: [], year: "2023", season: "Fall"}
-7 {courses: [], year: "2024", season: "Winter"}
-8 {year: "2024", season: "Spring", courses: []}
-9 {courses: [], season: "Fall", year: "2024"}
-10 {season: "Winter", year: "2025", courses: []}
-11 {year: "2025", season: "Spring", courses: []}
-
-Array Prototype
-*/
 
   useEffect(() => {
-    // Authentication Checks
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         if (!user?.email?.includes("@scu.edu")) {
@@ -76,14 +57,11 @@ Array Prototype
       }
     });
 
-    // Sync with user info
-
     return () => {
       unsubscribe();
     };
   }, [user]);
 
-  // TODO: Refactor this to a firebase helper file
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
@@ -92,7 +70,6 @@ Array Prototype
     try {
       const UserCredential = await signInWithPopup(auth, provider);
       const user = UserCredential.user;
-      // When registering, don't create the user profile if non-SCU
       if (user?.email?.includes("@scu.edu")) {
         await setDoc(doc(db, "users", user.uid), {
           uid: user.uid,
@@ -109,7 +86,6 @@ Array Prototype
     }
   };
 
-  // Gets plan from Firebase Storage
   const fetchUserPlan = async (
     setUserPlan: Dispatch<SetStateAction<UserCourseData[]>>
   ) => {
@@ -123,10 +99,8 @@ Array Prototype
           const data = docSnap.data();
           setUserPlan(data?.plan);
         }
-        // Otherwise, don't do anything. This code will break if we set that state to an empty value
       });
 
-      // Return unsubscribe function to clean up the listener when the component unmounts
       return listener;
     } catch (error) {
       console.log("Unable to check user info, MajorReqs.tsx", error);
@@ -169,36 +143,39 @@ Array Prototype
   };
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {user ? (
         <div className="flex flex-col">
-          <div className="flex w-full">
-            <NavBar isLoggedIn={true} selectedPage={"Home"}></NavBar>
-          </div>
+          <NavBar isLoggedIn={true} selectedPage={"Home"} />
+
           {/* Save Button positioned to the right */}
           <div className="fixed bottom-6 right-6 z-50">
             <SaveButton userPlan={userPlan} />
           </div>
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
-                <SaveButton userPlan={userPlan} />
-              </div> */}
-          <div className="grid grid-cols-5 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <div className="col-span-1">
-              <MajorReqs userPlan={userPlan} />
-              <CoreReqs userPlan={userPlan} />
+
+          <div className="w-full max-w-screen-2xl mx-auto p-8">
+            {/* Course Stats Card */}
+            <div style={{ marginBottom: "20px" }}>
+              <CourseStatsCard userPlan={userPlan} />
             </div>
-            <div className="col-span-4">
-              <DragDropCourses
-                setSelectedQuarter={setSelectedQuarter}
-                selectedQuarter={selectedQuarter}
-                onSubmit={onSubmit}
-                setUserPlan={setUserPlan}
-                setAddingClass={setAddingClass}
-                isAddingClass={addingClass}
-                userPlan={userPlan}
-                availableCourses={availableCourses} // Make sure to pass availableCourses
-                setAvailableCourses={setAvailableCourses}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+              <div className="col-span-1 space-y-8">
+                <MajorReqs userPlan={userPlan} />
+                <CoreReqs userPlan={userPlan} />
+              </div>
+              <div className="col-span-4">
+                <DragDropCourses
+                  setSelectedQuarter={setSelectedQuarter}
+                  selectedQuarter={selectedQuarter}
+                  onSubmit={onSubmit}
+                  setUserPlan={setUserPlan}
+                  setAddingClass={setAddingClass}
+                  isAddingClass={addingClass}
+                  userPlan={userPlan}
+                  availableCourses={availableCourses}
+                  setAvailableCourses={setAvailableCourses}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -207,11 +184,11 @@ Array Prototype
           className="flex justify-center items-center h-screen bg-cover bg-center"
           style={{ backgroundImage: `url(${sunBackgroundImage.src})` }}
         >
-          <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-6 rounded-lg shadow-lg">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              Welcome to SCU Course Planner
+          <div className="flex flex-col items-center space-y-4 bg-white bg-opacity-75 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
+              SCU Course Planner
             </h1>
-            <p className="text-lg text-gray-700 text-center">
+            <p className="text-lg text-gray-700 text-center mb-6">
               Sign in with your SCU email to access your course planner and
               manage your academic journey.
             </p>
@@ -223,9 +200,9 @@ Array Prototype
                   console.error("Error signing in:", error);
                 }
               }}
-              className="px-8 py-4 text-2xl bg-blue-500 text-white rounded-lg flex items-center space-x-2"
+              className="px-8 py-4 text-xl bg-blue-500 text-white rounded-lg flex items-center space-x-3 hover:bg-blue-600 transition-colors"
             >
-              <Mail className="text-3xl" />
+              <Mail className="w-6 h-6" />
               <span>Sign in with Google</span>
             </Button>
           </div>
