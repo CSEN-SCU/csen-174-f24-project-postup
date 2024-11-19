@@ -10,9 +10,7 @@ import { auth, db } from "./utils/firebase";
 import { useRouter } from "next/navigation";
 import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
-import { 
-  Mail, 
-} from "lucide-react";
+import { Mail } from "lucide-react";
 import sunBackgroundImage from "./scu_sunset.jpg";
 import {
   doc,
@@ -38,6 +36,7 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
   const [availableCourses, setAvailableCourses] = useState<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
   }>([]);
 
@@ -148,7 +147,7 @@ export default function Home() {
       {user ? (
         <div className="flex flex-col">
           <NavBar isLoggedIn={true} selectedPage={"Home"} />
-          
+
           {/* Save Button positioned to the right */}
           <div className="fixed bottom-6 right-6 z-50">
             <SaveButton userPlan={userPlan} />
@@ -156,20 +155,13 @@ export default function Home() {
 
           <div className="w-full max-w-screen-2xl mx-auto p-8">
             {/* Course Stats Card */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: "20px" }}>
               <CourseStatsCard userPlan={userPlan} />
-
-          {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', marginRight: '20px'}}>
-                <SaveButton userPlan={userPlan} />
-              </div> */}
-          <div className="grid grid-cols-5 min-h-screen p-8 pb-10 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <div className="col-span-1">
-              <MajorReqs userPlan={userPlan} />
-              <CoreReqs userPlan={userPlan} />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               <div className="col-span-1 space-y-8">
                 <MajorReqs userPlan={userPlan} />
+                <CoreReqs userPlan={userPlan} />
               </div>
               <div className="col-span-4">
                 <DragDropCourses
@@ -197,7 +189,8 @@ export default function Home() {
               SCU Course Planner
             </h1>
             <p className="text-lg text-gray-700 text-center mb-6">
-              Sign in with your SCU email to access your course planner and manage your academic journey.
+              Sign in with your SCU email to access your course planner and
+              manage your academic journey.
             </p>
             <Button
               onClick={async () => {
