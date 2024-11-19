@@ -15,6 +15,7 @@ import { AddClassTemplateProp } from "@/app/utils/interfaces";
 const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   onSubmit,
   availableCourses,
+  userPlan,
 }) => {
   const inputRefs = [
     // to get rid of this I need to overhaul this, naurrr
@@ -90,6 +91,14 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
       <button
         className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
         onClick={() => {
+          for (const quart of userPlan) {
+            for (const course of quart.courses) {
+              if (course.id === inputRefs[1].current?.value) {
+                console.log("Cannot add a duplicate course.");
+                return;
+              }
+            }
+          }
           if (inputRefs.every((ref) => ref.current?.value.trim() !== "")) {
             onSubmit?.({
               name: selectedClass?.title || "",
