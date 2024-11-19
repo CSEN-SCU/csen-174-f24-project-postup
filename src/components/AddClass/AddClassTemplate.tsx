@@ -17,14 +17,13 @@ import { AddClassTemplateProp } from "@/app/utils/interfaces";
 const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   onSubmit,
   availableCourses,
-  setAvailableCourses,
+  userPlan,
 }) => {
   const inputRefs = useRef<HTMLInputElement>(null);
   const [selectedClass, setSelectedClass]: [
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
     Dispatch<SetStateAction<any>>
   ] = useState();
   const [inputError, setInputError]: [

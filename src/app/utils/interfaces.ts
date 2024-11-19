@@ -42,5 +42,5 @@ export interface AddClassTemplateProp {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   availableCourses: { [x: string]: any; };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setAvailableCourses: React.Dispatch<React.SetStateAction<{[x: string]: any;}>>
+  userPlan: any;
 }
