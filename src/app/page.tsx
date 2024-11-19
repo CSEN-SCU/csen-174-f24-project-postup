@@ -12,20 +12,7 @@ import { signOut } from "../components/Authentication/GoogleSignIn";
 import { Button } from "@/components/ui/button";
 import { 
   Mail, 
-  Users, 
-  Book, 
-  School, 
-  Clock, 
-  MapPin, 
-  Phone, 
-  ExternalLink 
 } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-} from "@/components/ui/card";
 import sunBackgroundImage from "./scu_sunset.jpg";
 import {
   doc,
@@ -37,7 +24,7 @@ import {
 import SaveButton from "@/components/SaveButton";
 import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
-import CourseStatsCard from "@/components/CourseStatsCard"; // Import the new component
+import CourseStatsCard from "@/components/CourseStatsCard";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -52,15 +39,6 @@ export default function Home() {
   const [availableCourses, setAvailableCourses] = useState<{
     [x: string]: any;
   }>([]);
-
-  // Sample advisor info (you may want to replace with actual data)
-  const contactAdvisorInfo = {
-    name: "Academic Advisor",
-    number: "(408) 123-4567",
-    email: "advisor@scu.edu",
-    officeLocation: "Engineering Building, Room 101",
-    officeHours: "Mon-Fri, 9am-5pm",
-  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
