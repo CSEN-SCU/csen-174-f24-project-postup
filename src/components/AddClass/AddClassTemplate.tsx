@@ -34,6 +34,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   // Search input states
   const [filteredCourses, setFilteredCourses] = useState(availableCourses);
   const [searchQuery, setSearchQuery] = useState("");
+
   // On component render, this will focus on the first input box
   useEffect(() => {
     inputRefs.current?.focus();
@@ -48,6 +49,13 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
       )
     );
   }, [searchQuery, availableCourses]);
+
+  // On selection of a class, immediately add it
+  useEffect(() => {
+    if (selectedClass) {
+      handleAddCourse();
+    }
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelectCourse = (course: any) => {
@@ -67,7 +75,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
       <div
         style={style}
         className="cursor-pointer p-2 hover:bg-gray-200"
-        onClick={() => handleSelectCourse(course)}
+        onClick={() => {handleSelectCourse(course)}}
       >
         {course.courseListing}
       </div>
@@ -118,7 +126,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
           )}
         </AutoSizer>
       </div>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-coReact Hook useEffect has a missing dependency: 'handleAddCourse'. Either include it or remove the dependency array.ls-2">
         <div className="justify-end items-end flex">
           {inputError && (
             <text className="align-middle font-light text-sm underline text-red-600 decoration-red-600 decoration-2">
@@ -127,12 +135,6 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
           )}
         </div>
       </div>
-      <button
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded w-full"
-        onClick={handleAddCourse}
-      >
-        Add Course
-      </button>
     </div>
   );
 };
