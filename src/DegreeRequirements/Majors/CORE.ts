@@ -4,16 +4,16 @@ export const core_reqs_ENGR = [
   {
     requirement: "Core Explorations",
     courses: [
-      { courseId: "Critical Thinking and Writing 1" },
-      { courseId: "Critical Thinking and Writing 2" },
-      { courseId: "Culture and Ideas 1" },
-      { courseId: "Culture and Ideas 2" },
-      { courseId: "Culture and Ideas 3" },
-      { courseId: "Religion, Theology and Culture 1", courses: [
-        
+      { courseId: "Critical Thinking and Writing I" },
+      { courseId: "Critical Thinking and Writing II" },
+      { courseId: "Culture and Ideas I" },
+      { courseId: "Culture and Ideas II" },
+      { courseId: "Culture and Ideas III" },
+      { courseId: "Religion, Theology and Culture I", courses: [
+
       ] },
-      { courseId: "Religion, Theology and Culture 2" },
-      { courseId: "Religion, Theology and Culture 3" },
+      { courseId: "Religion, Theology and Culture II" },
+      { courseId: "Religion, Theology and Culture III" },
       { courseId: "Ethics" },
       { courseId: "Diversity" },
       { courseId: "Civic Engagement" },

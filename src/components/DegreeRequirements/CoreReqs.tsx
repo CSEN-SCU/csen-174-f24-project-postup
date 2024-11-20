@@ -31,7 +31,7 @@ const calculateCoreReqs = async (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     currentUserClasses.flatMap((plan: any) =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      plan.courses.map((course: any) => course.id)
+      plan.courses.map((course: any) => course.courseTags)
     )
   );
 
