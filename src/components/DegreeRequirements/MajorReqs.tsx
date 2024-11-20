@@ -44,11 +44,6 @@ const calculateMajorReqs = (
       }
       return [req.courseId];
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...requirements[0].electiveClasses.flatMap((req: any) => {
-      // Elective classes: handle as normal courses, no alternatives in this example
-      return req.courseId;
-    }),
   ];
 
   // console.log("allRequiredCourseIds ", allRequiredCourseIds);
