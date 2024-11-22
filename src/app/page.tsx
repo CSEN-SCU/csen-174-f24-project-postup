@@ -24,6 +24,7 @@ import DragDropCourses from "@/components/DraggableCards/DragDropCourses";
 import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 import CourseStatsCard from "@/components/CourseStatsCard";
 import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
+import ElectiveReqs from "@/components/DegreeRequirements/Electives";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -162,6 +163,7 @@ export default function Home() {
               <div className="col-span-1 space-y-8">
                 <MajorReqs userPlan={userPlan} />
                 <CoreReqs userPlan={userPlan} />
+                <ElectiveReqs userPlan={userPlan} />
               </div>
               <div className="col-span-4">
                 <DragDropCourses
