@@ -7,13 +7,6 @@
 import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
 // hard-coded this for MVP -- in the future, use dynamic imports
 import { core_reqs_ENGR } from "@/DegreeRequirements/Majors/CORE";
-import {
-  getFirestore,
-  getDocs,
-  query,
-  collection,
-  where,
-} from "firebase/firestore";
 import { UserCourseData, currentUserPlan } from "@/app/utils/types";
 
 // Goal: Retrieve user core requirements, compare to correct json file, do some magic
@@ -23,64 +16,45 @@ const calculateCoreReqs = async (
   currentUserClasses: UserCourseData[]
 ) => {
   if (!currentUserClasses) {
-    console.log("no classes");
+    console.log("No classes provided");
     return null;
   }
 
+  // Extract user courseTags into a Set for efficient lookups
   const userCourses = new Set(
-    currentUserClasses.flatMap(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (plan: any) =>
-        plan.courses
-          .filter(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (course: any) =>
-              Array.isArray(course.courseTags) && course.courseTags.length > 0
-          ) 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    currentUserClasses.flatMap((plan: any) =>
+      plan.courses
+        .filter(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .flatMap((course: any) => course.courseTags) 
+          (course: any) =>
+            Array.isArray(course.courseTags) && course.courseTags.length > 0
+        )
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .flatMap((course: any) => course.courseTags)
     )
   );
-  console.log("TEST ", userCourses);
 
-  // Combine core classes
-  const allRequiredCourseIds = [
+  console.log("Test", userCourses)
+  // Gather all required tags from core_reqs_ENGR
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allRequiredCourseIds = core_reqs_ENGR.flatMap((req: any) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...core_reqs_ENGR.flatMap((req: any) =>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      req.courses.map((course: any) => course.courseId)
-    ),
-  ];
+    req.courses.map((course: any) => course.courseId)
+  );
 
-  const db = getFirestore();
+  // Split fulfilled and unmet requirements
+  const fulfilled = allRequiredCourseIds.filter((courseId) =>
+    userCourses.has(courseId)
+  );
+  const unmet = allRequiredCourseIds.filter(
+    (courseId) => !userCourses.has(courseId)
+  );
 
-  const fulfilled = [];
-  const unmet = [];
-  for (const course of allRequiredCourseIds) {
-    const querySnapshot = await getDocs(
-      query(
-        collection(db, "courses"),
-        where("courseTags", "array-contains", course)
-      )
-    );
+  // Calculate total requirements
+  const totalReqsLeft = unmet.length;
 
-    let found = false;
-    for (const doc of querySnapshot.docs) {
-      console.log(doc.id, " => ", doc.data());
-      if (userCourses.has(doc.id)) {
-        fulfilled.push(course);
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
-      unmet.push(course);
-    }
-  }
-
-  const totalReqsLeft = allRequiredCourseIds.length - fulfilled.length;
-
+  // Update state
   setCoreReqsInfo([fulfilled.length, unmet, totalReqsLeft]);
 };
 
