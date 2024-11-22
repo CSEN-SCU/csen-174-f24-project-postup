@@ -50,7 +50,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     );
   }, [searchQuery, availableCourses]);
 
-  // On selection of a class, immediately add it
+  // On selection of a class, immediately add itAddClassTem
   useEffect(() => {
     if (selectedClass) {
       handleAddCourse();
@@ -88,6 +88,7 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
         name: selectedClass.title || "",
         id: selectedClass.courseId || "",
         unit: selectedClass.units || "",
+        courseTags: selectedClass.courseTags || "",
       });
       const updatedAvailableCourses = availableCourses.filter(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

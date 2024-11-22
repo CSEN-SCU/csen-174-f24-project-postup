@@ -7,6 +7,7 @@ export interface CourseData {
   name: string;
   id: string;
   unit: string;
+  courseTags?: [];
 }
 
 export interface DragDropCardProps {
