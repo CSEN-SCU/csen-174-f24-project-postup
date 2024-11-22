@@ -28,12 +28,20 @@ const calculateCoreReqs = async (
   }
 
   const userCourses = new Set(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    currentUserClasses.flatMap((plan: any) =>
+    currentUserClasses.flatMap(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      plan.courses.map((course: any) => course.courseTags)
+      (plan: any) =>
+        plan.courses
+          .filter(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (course: any) =>
+              Array.isArray(course.courseTags) && course.courseTags.length > 0
+          ) 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .flatMap((course: any) => course.courseTags) 
     )
   );
+  console.log("TEST ", userCourses);
 
   // Combine core classes
   const allRequiredCourseIds = [
