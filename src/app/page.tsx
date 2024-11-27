@@ -175,7 +175,6 @@ export default function Home() {
                   isAddingClass={addingClass}
                   userPlan={userPlan}
                   availableCourses={availableCourses}
-                  setAvailableCourses={setAvailableCourses}
                 />
               </div>
             </div>

@@ -21,10 +21,6 @@ export interface DragDropCardProps {
   onSubmit?: (arg0: CourseData) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   availableCourses: { [x: string]: any };
-  setAvailableCourses: React.Dispatch<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    React.SetStateAction<{ [x: string]: any }>
-  >;
 }
 
 export interface UserCourse {
