@@ -35,7 +35,6 @@ const calculateCoreReqs = async (
     )
   );
 
-  console.log("Test", userCourses)
   // Gather all required tags from core_reqs_ENGR
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const allRequiredCourseIds = core_reqs_ENGR.flatMap((req: any) =>

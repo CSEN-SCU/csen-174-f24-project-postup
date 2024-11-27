@@ -15,7 +15,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
   isAddingClass,
   onSubmit,
   availableCourses,
-  setAvailableCourses,
 }) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -120,7 +119,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                       onSubmit={onSubmit}
                       availableCourses={availableCourses}
                       userPlan={userPlan}
-                      setAvailableCourses={setAvailableCourses}
                     />
                   )}
               </div>

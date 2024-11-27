@@ -13,17 +13,15 @@ import { AddClassTemplateProp } from "@/app/utils/interfaces";
  * This component is the "popup" that appears when a user clicks the "Add Class" button.
  * The goal is to have the user fill out the number of units, course name, and course ID.
  */
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
   onSubmit,
   availableCourses,
-  setAvailableCourses
+  userPlan,
 }) => {
   const inputRefs = useRef<HTMLInputElement>(null);
   const [selectedClass, setSelectedClass]: [
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Dispatch<SetStateAction<any>>
   ] = useState();
   const [inputError, setInputError]: [
@@ -42,13 +40,16 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
 
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase();
-    setFilteredCourses(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      availableCourses.filter((course: any) =>
-        course.courseListing.toLowerCase().includes(lowerCaseQuery)
-      )
+    /* Instead of changing the available courses, we add an extra filter to not show anything present in the current user's plan */
+    const filteredSearch = availableCourses.filter(
+      (course: any) =>
+        course.courseListing.toLowerCase().includes(lowerCaseQuery) &&
+        !userPlan.some((quarter: any) =>
+          quarter.courses.some((userCourse: any) => userCourse.id === course.courseId)
+        )
     );
-  }, [searchQuery, availableCourses]);
+    setFilteredCourses(filteredSearch);
+  }, [searchQuery, availableCourses, userPlan]);
 
   // On selection of a class, immediately add itAddClassTem
   useEffect(() => {
@@ -57,7 +58,6 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSelectCourse = (course: any) => {
     setSelectedClass(course);
     setSearchQuery(course.courseListing); // Update search input with the selected course
@@ -75,7 +75,9 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
       <div
         style={style}
         className="cursor-pointer p-2 hover:bg-gray-200"
-        onClick={() => {handleSelectCourse(course)}}
+        onClick={() => {
+          handleSelectCourse(course);
+        }}
       >
         {course.courseListing}
       </div>
@@ -90,11 +92,6 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
         unit: selectedClass.units || "",
         courseTags: selectedClass.courseTags || "",
       });
-      const updatedAvailableCourses = availableCourses.filter(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (course: any) => course.courseId !== selectedClass.courseId
-      );
-      setAvailableCourses(updatedAvailableCourses);
       setSelectedClass(null);
       setSearchQuery("");
     } else {

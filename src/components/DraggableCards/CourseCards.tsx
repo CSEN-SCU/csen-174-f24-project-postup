@@ -35,7 +35,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
   return (
     <div ref={setNodeRef} style={style}>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between ">
         <h4
           {...listeners}
           {...attributes}
@@ -43,6 +43,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             cursor: isLocked ? "not-allowed" : "grab",
             pointerEvents: isLocked ? "none" : "auto",
           }}
+          className="text-sm font-bold border-b border-b-black"
         >
           {course.name}
         </h4>
@@ -78,8 +79,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
           pointerEvents: isLocked ? "none" : "auto",
         }}
       >
-        <p>Course ID: {course.id}</p>
-        <p>Units: {course.unit}</p>
+        <p className="text-sm">Course ID: {course.id}</p>
+        <p className="text-sm">Units: {course.unit}</p>
       </div>
     </div>
   );
