@@ -120,7 +120,6 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                       onSubmit={onSubmit}
                       availableCourses={availableCourses}
                       userPlan={userPlan}
-                      setAvailableCourses={setAvailableCourses}
                     />
                   )}
               </div>
