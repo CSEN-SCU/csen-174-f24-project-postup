@@ -28,37 +28,47 @@ export const core_reqs_ENGR = [
         prettyName: "RTC 1",
         courseId: "Core Foundations :: Religion, Theology and Culture 1",
       },
-      { 
+      {
         prettyName: "RTC 2",
-        courseId: "Core Foundations :: Religion, Theology and Culture 2" },
-      { 
+        courseId: "Core Foundations :: Religion, Theology and Culture 2",
+      },
+      {
         prettyName: "RTC 3",
-        courseId: "Core Explorations :: Religion, Theology and Culture 3" },
-      { 
+        courseId: "Core Explorations :: Religion, Theology and Culture 3",
+      },
+      {
         prettyName: "Ethics",
-        courseId: "Core Explorations :: Ethics" },
-      { 
+        courseId: "Core Explorations :: Ethics",
+      },
+      {
         prettyName: "Diversity",
-        courseId: "Core Explorations :: Diversity: US Perspectives" },
-      { 
+        courseId: "Core Explorations :: Diversity: US Perspectives",
+      },
+      {
         prettyName: "Civic Engagement",
-        courseId: "Core Explorations :: Civic Engagement" },
-      { 
+        courseId: "Core Explorations :: Civic Engagement",
+      },
+      {
         prettyName: "Natural Sciences",
-        courseId: "Core Explorations :: Natural Sciences" },
-      { 
+        courseId: "Core Explorations :: Natural Sciences",
+      },
+      {
         prettyName: "Arts",
-        courseId: "Core Explorations :: Arts" },
-      { 
+        courseId: "Core Explorations :: Arts",
+      },
+      {
         prettyName: "Science, Technology, and Society",
-        courseId: "Core Explorations :: Science, Technology, and Society" },
+        courseId: "Core Explorations :: Science, Technology, and Society",
+      },
+      {
+        prettyName: "ELSJ",
+        courseId: "Core Integrations :: Experiential Learning for Social Justice",
+      },
+      {
+        prettyName: "Advanced Writing",
+        courseId: "Core Integrations :: Advanced Writing",
+      },
     ],
   },
-  {
-    requirement: "Integrations",
-    courses: [
-      { courseId: "Experiential Learning for Social Justice (ELSJ)" },
-      { courseId: "Advanced Writing" },
-    ],
-  },
+
 ];
