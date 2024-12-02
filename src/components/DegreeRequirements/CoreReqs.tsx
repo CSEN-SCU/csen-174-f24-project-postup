@@ -2,7 +2,7 @@
  * This a component that would show the Core Reqs. In case a separate UI has been made for this, I ensured that the functions are easily exported or
  * moved out.
  */
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 // import { auth, db } from "@/app/utils/firebase";
 import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
 // hard-coded this for MVP -- in the future, use dynamic imports
@@ -22,39 +22,37 @@ const calculateCoreReqs = async (
 
   // Extract user courseTags into a Set for efficient lookups
   const userCourses = new Set(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     currentUserClasses.flatMap((plan: any) =>
       plan.courses
         .filter(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (course: any) =>
             Array.isArray(course.courseTags) && course.courseTags.length > 0
         )
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .flatMap((course: any) => course.courseTags)
     )
   );
 
   // Gather all required tags from core_reqs_ENGR
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const allRequiredCourseIds = core_reqs_ENGR.flatMap((req: any) =>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    req.courses.map((course: any) => course.courseId)
+  const allRequiredCourses = core_reqs_ENGR.flatMap((req: any) =>
+    req.courses
   );
 
   // Split fulfilled and unmet requirements
-  const fulfilled = allRequiredCourseIds.filter((courseId) =>
-    userCourses.has(courseId)
+  const fulfilled = allRequiredCourses.filter((course: any) =>
+    userCourses.has(course.courseId)
   );
-  const unmet = allRequiredCourseIds.filter(
-    (courseId) => !userCourses.has(courseId)
+  const unmet = allRequiredCourses.filter(
+    (course: any) => !userCourses.has(course.courseId)
   );
+
+  // Extract unmet course pretty names
+  const unmetPrettyNames = unmet.map((course: any) => course.prettyName);
 
   // Calculate total requirements
   const totalReqsLeft = unmet.length;
 
   // Update state
-  setCoreReqsInfo([fulfilled.length, unmet, totalReqsLeft]);
+  setCoreReqsInfo([fulfilled.length, unmetPrettyNames, totalReqsLeft]);
 };
 
 const CoreReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
