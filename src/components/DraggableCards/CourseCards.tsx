@@ -79,7 +79,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           pointerEvents: isLocked ? "none" : "auto",
         }}
       >
-        <p className="text-sm">Course ID: {course.id}</p>
+        <p className="text-sm">Course ID: {course.id.replace("_"," ")}</p>
         <p className="text-sm">Units: {course.unit}</p>
       </div>
     </div>
