@@ -90,7 +90,7 @@ const ElectiveReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
                 key={index}
                 style={{ padding: "8px", borderBottom: "1px solid #ccc" }}
               >
-                {courseId}
+                {courseId.replace("_", " ")}
               </li>
             ))
           ) : (
