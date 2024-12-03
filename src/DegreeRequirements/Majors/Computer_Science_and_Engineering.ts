@@ -153,7 +153,7 @@ export const requirements = [
         courseId: "AMTH_106",
         alternatives: [
           {
-            courseId: "MATH22",
+            courseId: "MATH_22",
           },
         ],
       },
