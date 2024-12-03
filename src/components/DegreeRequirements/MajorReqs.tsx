@@ -9,6 +9,7 @@ import React, { Dispatch, useState, SetStateAction, useEffect } from "react";
 import { requirements } from "@/DegreeRequirements/Majors/Computer_Science_and_Engineering";
 import { getDoc, doc, collection } from "firebase/firestore";
 import { UserCourseData, currentUserPlan } from "@/app/utils/types";
+import { getPrettyName } from "@/app/utils/helper";
 
 // Goal: Retrieve user major, compare to correct json file, do some magic
 // Returns a tuple [reqs_fulfilled: int, reqs_left: string[], total_reqs: int]
@@ -119,7 +120,7 @@ const MajorReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
                 key={index}
                 style={{ padding: "8px", borderBottom: "1px solid #ccc" }}
               >
-                {courseId.replace("_", " ")}
+                {getPrettyName(courseId)}
               </li>
             ))
           ) : (
