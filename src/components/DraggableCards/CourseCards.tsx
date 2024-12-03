@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CourseCardProps } from "@/app/utils/types";
 import { useDraggable } from "@dnd-kit/core";
+import { getPrettyName } from "@/app/utils/helper";
 
 const CourseCard: React.FC<CourseCardProps> = ({
   id,
@@ -79,7 +80,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           pointerEvents: isLocked ? "none" : "auto",
         }}
       >
-        <p className="text-sm">Course ID: {course.id.replace("_"," ")}</p>
+        <p className="text-sm">Course ID: {getPrettyName(course.id)}</p>
         <p className="text-sm">Units: {course.unit}</p>
       </div>
     </div>
