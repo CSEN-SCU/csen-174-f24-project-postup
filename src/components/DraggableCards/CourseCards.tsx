@@ -59,16 +59,30 @@ const CourseCard: React.FC<CourseCardProps> = ({
           >
             {isLocked ? "🔒" : "🔓"}
           </button>
-          <button
-            onClick={() => {
-              if (!isLocked) handleRemove(course.id, season, year);
-            }}
-            style={{
-              cursor: isLocked ? "not-allowed" : "pointer",
-              pointerEvents: isLocked ? "none" : "auto",
-            }}
-            className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-full w-4 h-4 items-center"
-          />
+          <div className="relative inline-flex items-center group">
+            <button
+              onClick={() => {
+                if (!isLocked) handleRemove(course.id, season, year);
+              }}
+              style={{
+                cursor: isLocked ? "not-allowed" : "pointer",
+                pointerEvents: isLocked ? "none" : "auto",
+              }}
+              className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-full w-4 h-4 flex items-center justify-center"
+            >
+              <span className="text-xs text-white">-</span>
+            </button>
+            {!isLocked && (
+              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 
+                bg-white text-red-500 text-xs px-2 py-1 rounded-md 
+                opacity-0 group-hover:opacity-100 
+                transition-opacity duration-300 
+                pointer-events-none 
+                whitespace-nowrap">
+                Remove
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div
