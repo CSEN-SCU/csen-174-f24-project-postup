@@ -90,14 +90,23 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     <DndContext onDragEnd={handleDragEnd}>
       <div className="flex flex-col gap-4 min-w-full max-w-full overflow-scroll">
         {/* Render Droppable Quarters */}
-        <div className="grid grid-cols-3 gap-4 ">
-          {userPlan.map(({ season, year }) => (
+        <div className="grid grid-cols-3 gap-4">
+          {userPlan.map(({ season, year, courses }) => (
             <DroppableQuarter
               key={`${season}-${year}`}
               id={`${season}-${year}`}
               season={season}
               year={year}
             >
+              <div>
+                {(() => {
+                  const totalUnits = courses.reduce(
+                    (acc, course) => acc + (Number(course.unit) || 0),
+                    0
+                  );
+                  return <h4>Total Units: {totalUnits}</h4>;
+                })()}
+              </div>
               {renderCourseCards(season, year)}
               {/* Rendering Logic for the Add Class button */}
               {!(
