@@ -107,7 +107,6 @@ const MajorReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
 
   return majorReqsInfo ? (
     <div>
-      <p className="text-lg font-bold">Major Requirements</p>
       <p>
         <span className="font-bold">Requirements Fulfilled: </span>{" "}
         {majorReqsInfo[0]}

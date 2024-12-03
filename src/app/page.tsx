@@ -25,6 +25,12 @@ import MajorReqs from "@/components/DegreeRequirements/MajorReqs";
 import CourseStatsCard from "@/components/CourseStatsCard";
 import CoreReqs from "@/components/DegreeRequirements/CoreReqs";
 import ElectiveReqs from "@/components/DegreeRequirements/Electives";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -159,11 +165,31 @@ export default function Home() {
             <div style={{ marginBottom: "20px" }}>
               <CourseStatsCard userPlan={userPlan} />
             </div>
+            {/* Accordian Feature for Organization */}
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               <div className="col-span-1 space-y-8">
-                <MajorReqs userPlan={userPlan} />
-                <CoreReqs userPlan={userPlan} />
-                <ElectiveReqs userPlan={userPlan} />
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="major-requirements">
+                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Major Requirements</AccordionTrigger>
+                    <AccordionContent>
+                      <MajorReqs userPlan={userPlan} />
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="core-requirements">
+                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Core Requirements</AccordionTrigger>
+                    <AccordionContent>
+                      <CoreReqs userPlan={userPlan} />
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="elective-requirements">
+                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Elective Requirements</AccordionTrigger>
+                    <AccordionContent>
+                      <ElectiveReqs userPlan={userPlan} />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
               <div className="col-span-4">
                 <DragDropCourses

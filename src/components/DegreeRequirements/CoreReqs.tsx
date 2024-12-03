@@ -68,7 +68,6 @@ const CoreReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
 
   return coreReqsInfo ? (
     <div>
-      <p className="text-lg font-bold">Core Requirements</p>
       <p>
         <span className="font-bold">Requirements Fulfilled: </span>{" "}
         {coreReqsInfo[0]}

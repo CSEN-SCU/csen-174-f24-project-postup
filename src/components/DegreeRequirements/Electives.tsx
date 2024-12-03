@@ -77,7 +77,6 @@ const ElectiveReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
 
   return electiveReqs ? (
     <div>
-      <p className="text-lg font-bold">Elective Requirements</p>
       <p>
         <span className="font-bold">Requirements Fulfilled: </span>{" "}
         {electiveReqs[0]}
