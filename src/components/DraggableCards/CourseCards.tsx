@@ -94,8 +94,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
           pointerEvents: isLocked ? "none" : "auto",
         }}
       >
-        <p className="text-sm">Course ID: {getPrettyName(course.id)}</p>
-        <p className="text-sm">Units: {course.unit}</p>
+        <p className="text-sm">{getPrettyName(course.id)}</p>
+        <p className="text-sm">{course.unit} Units</p>
       </div>
     </div>
   );
