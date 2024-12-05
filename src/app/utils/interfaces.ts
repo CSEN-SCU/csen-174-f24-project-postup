@@ -10,6 +10,8 @@ export interface CourseData {
   courseTags?: [];
   description?: string;
   courseListing?: string;
+  prerequisiteCourses?: any;
+  corequisiteCourses?: any;
 }
 
 export interface DragDropCardProps {

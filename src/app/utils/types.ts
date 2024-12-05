@@ -5,8 +5,8 @@ export type Course = {
   id: string;
   unit: string;
   description?: string;
-  prerequisites?: string;
-  corequisites?: string;
+  prerequisiteCourses?: any;
+  corequisiteCourses?: any;
 };
 
 export type UserCourseData = {
@@ -14,8 +14,8 @@ export type UserCourseData = {
   year: string;
   courses: Course[];
   description?: string;
-  prerequisites?: string;
-  corequisites?: string;
+  prerequisiteCourses?: any;
+  corequisiteCourses?: any;
 };
 
 export type CourseCardProps = {
