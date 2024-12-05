@@ -100,14 +100,14 @@ const ToolsAndUsefulLinks = () => {
             <CardContent className="p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                 <div className="flex items-start space-x-3">
-                  <Users className="w-6 h-6 text-blue-600 mt-1" />
+                  <Users className="w-6 h-6 text-orange-600 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-700">Name</p>
                     <p className="text-gray-600">{contactAdvisorInfo.name}</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Phone className="w-6 h-6 text-blue-600 mt-1" />
+                  <Phone className="w-6 h-6 text-purple-600 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-700">Phone</p>
                     <p className="text-gray-600">{contactAdvisorInfo.number}</p>
@@ -121,14 +121,14 @@ const ToolsAndUsefulLinks = () => {
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <MapPin className="w-6 h-6 text-blue-600 mt-1" />
+                  <MapPin className="w-6 h-6 text-red-600 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-700">Location</p>
                     <p className="text-gray-600">{contactAdvisorInfo.officeLocation}</p>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Clock className="w-6 h-6 text-blue-600 mt-1" />
+                  <Clock className="w-6 h-6 text-green-600 mt-1" />
                   <div>
                     <p className="font-semibold text-gray-700">Office Hours</p>
                     <p className="text-gray-600">{contactAdvisorInfo.officeHours}</p>
@@ -176,7 +176,7 @@ const ToolsAndUsefulLinks = () => {
                       key={index}
                       className="p-4 bg-blue-50 rounded-lg flex items-start space-x-3"
                     >
-                      <Users className="w-6 h-6 text-blue-600 mt-1" />
+                      <Users className="w-6 h-6 text-orange-600 mt-1" />
                       <div>
                         <p className="font-semibold text-gray-700">{advisor.name}</p>
                         <p className="text-gray-600">{advisor.email}</p>
