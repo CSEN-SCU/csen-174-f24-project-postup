@@ -4,6 +4,9 @@ export type Course = {
   name: string;
   id: string;
   unit: string;
+  description?: string;
+  prerequisites?: string;
+  corequisites?: string;
 };
 
 export type UserCourseData = {

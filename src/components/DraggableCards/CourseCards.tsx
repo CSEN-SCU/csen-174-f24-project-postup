@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CourseCardProps } from "@/app/utils/types";
 import { useDraggable } from "@dnd-kit/core";
 import { getPrettyName } from "@/app/utils/helper";
+import ClassDescriptions from "../ClassDescriptions/ClassDescriptions";
 
 const CourseCard: React.FC<CourseCardProps> = ({
   id,
@@ -33,20 +34,20 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
   // Check if course is valid, otherwise don't render
   if (!course.id) return null;
+  console.log(course);
 
   return (
     <div ref={setNodeRef} style={style}>
       <div className="flex flex-row justify-between ">
         <h4
-          {...listeners}
-          {...attributes}
           style={{
             cursor: isLocked ? "not-allowed" : "grab",
             pointerEvents: isLocked ? "none" : "auto",
           }}
           className="text-sm font-bold border-b border-b-black"
         >
-          {course.name}
+
+          <ClassDescriptions course={course} />
         </h4>
         <div className="flex gap-2">
           <button
