@@ -31,6 +31,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -43,7 +44,6 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
   const [availableCourses, setAvailableCourses] = useState<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
   }>([]);
 
