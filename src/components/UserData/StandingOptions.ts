@@ -1,14 +1,14 @@
 export const standings = [
     {
-      standing: "First Year"
+      standing: "Freshman"
     },
     {
-      standing: "Second Year"
+      standing: "Sophomore"
     },
     {
-      standing: "Third Year"
+      standing: "Junior"
     },
     {
-      standing: "Fourth Year"
+      standing: "Senior"
     }
   ]
