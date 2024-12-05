@@ -18,9 +18,9 @@ interface ClassDescriptionsProps {
 export default function ClassDescriptions({course}: ClassDescriptionsProps) {
     const [isOpen, setIsOpen] = useState(false);
 
-    let description = (course.description != "") ? course.description : "No description available";
-    let prerequisite = (course.prerequisiteCourses != "") ? getPrettyName(course.prerequisiteCourses.join(", ")) : "None";
-    let corequisite = (course.corequisiteCourses != "") ? getPrettyName(course.corequisiteCourses.join(", ")) : "None";
+    const description = (course.description != "") ? course.description : "No description available";
+    const prerequisite = (course.prerequisiteCourses != "") ? getPrettyName(course.prerequisiteCourses.join(", ")) : "None";
+    const corequisite = (course.corequisiteCourses != "") ? getPrettyName(course.corequisiteCourses.join(", ")) : "None";
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>

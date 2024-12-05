@@ -5,7 +5,9 @@ export type Course = {
   id: string;
   unit: string;
   description?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prerequisiteCourses?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   corequisiteCourses?: any;
 };
 
@@ -14,7 +16,9 @@ export type UserCourseData = {
   year: string;
   courses: Course[];
   description?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prerequisiteCourses?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   corequisiteCourses?: any;
 };
 
