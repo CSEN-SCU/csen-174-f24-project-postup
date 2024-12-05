@@ -34,7 +34,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
   // Check if course is valid, otherwise don't render
   if (!course.id) return null;
-  console.log(course);
 
   return (
     <div ref={setNodeRef} style={style}>

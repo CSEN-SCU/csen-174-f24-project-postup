@@ -8,6 +8,8 @@ export interface CourseData {
   id: string;
   unit: string;
   courseTags?: [];
+  description?: string;
+  courseListing?: string;
 }
 
 export interface DragDropCardProps {

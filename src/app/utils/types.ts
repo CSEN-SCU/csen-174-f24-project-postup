@@ -13,6 +13,9 @@ export type UserCourseData = {
   season: string;
   year: string;
   courses: Course[];
+  description?: string;
+  prerequisites?: string;
+  corequisites?: string;
 };
 
 export type CourseCardProps = {
