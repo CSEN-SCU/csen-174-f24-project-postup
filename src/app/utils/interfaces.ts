@@ -8,6 +8,12 @@ export interface CourseData {
   id: string;
   unit: string;
   courseTags?: [];
+  description?: string;
+  courseListing?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prerequisiteCourses?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  corequisiteCourses?: any;
 }
 
 export interface DragDropCardProps {

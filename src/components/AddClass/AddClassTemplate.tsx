@@ -91,6 +91,10 @@ const AddClassTemplate: React.FC<AddClassTemplateProp> = ({
         id: selectedClass.courseId || "",
         unit: selectedClass.units || "",
         courseTags: selectedClass.courseTags || "",
+        description: selectedClass.description || "",
+        courseListing: selectedClass.courseListing || "",
+        prerequisiteCourses: selectedClass.prerequisiteCourses || "",
+        corequisiteCourses: selectedClass.corequisiteCourses || "",
       });
       setSelectedClass(null);
       setSearchQuery("");
