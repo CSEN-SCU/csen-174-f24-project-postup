@@ -52,22 +52,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
               <p className="text-base text-white">Academic Plan</p>
             </Link>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="pr-6">
             <Link
               className={buttonVariants({ variant: "outline" })}
               href="/tools"
               passHref
             >
               <p className="text-base text-white">Tools and Useful Links </p>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem className="pr-4">
-            <Link
-              className={buttonVariants({ variant: "outline" })}
-              href="/"
-              passHref
-            >
-              <p className="text-base text-white">Search Class</p>
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
