@@ -31,16 +31,22 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col w-full">
+      {saveComplete === true && (
+        <p className="text-green-500 mb-2">Save complete!</p>
+      )}
+      {saveComplete === false && (
+        <p className="text-red-500 mb-2">Save Failed!</p>
+      )}
+      <div className="flex justify-center w-full">
         <Button variant="outline" onClick={() => {
-        savePlan();
+          savePlan();
         }}>
-            <div>
-                <p className='text-white'>Save</p>
-            </div>
+          <div className="px">
+            <p className='text-white'>Save</p>
+          </div>
         </Button>
-        {saveComplete === true && <p className="text-green-500 absolute">Save complete!</p>}
-        {saveComplete === false && <p className="text-red-500">Save Failed!</p>}
+      </div>
     </div>
   )
 }

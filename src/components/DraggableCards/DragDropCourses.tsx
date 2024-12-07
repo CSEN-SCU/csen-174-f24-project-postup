@@ -6,17 +6,18 @@ import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import {DragDropCardProps} from "@/app/utils/interfaces";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react";
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
-                                                          setSelectedQuarter,
-                                                          setUserPlan,
-                                                          userPlan,
-                                                          selectedQuarter,
-                                                          setAddingClass,
-                                                          isAddingClass,
-                                                          onSubmit,
-                                                          availableCourses,
-                                                      }) => {
+    setSelectedQuarter,
+    setUserPlan,
+    userPlan,
+    selectedQuarter,
+    setAddingClass,
+    isAddingClass,
+    onSubmit,
+    availableCourses,
+}) => {
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
         if (!over || !active.data.current) return;
@@ -98,10 +99,36 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                     const endQuarter = startQuarter + 3; // Calculate ending quarter index
 
                     return (
-                        <Accordion key={yearIndex} type="single" collapsible>
-                            <AccordionItem value={`item-${yearIndex + 1}`}>
-                                <AccordionTrigger style={{ fontWeight: 'bold' }}>{yearName}</AccordionTrigger>
-                                <AccordionContent>
+                        <Accordion 
+                            key={yearIndex} 
+                            type="single" 
+                            collapsible 
+                            className="w-full border rounded-lg shadow-sm"
+                        >
+                            <AccordionItem 
+                                value={`item-${yearIndex + 1}`} 
+                                className="border-b last:border-b-0"
+                            >
+                                <AccordionTrigger 
+                                    className="
+                                        flex items-center justify-between 
+                                        w-full p-4 text-left 
+                                        bg-gray-50 hover:bg-gray-100 
+                                        transition-colors duration-200 
+                                        font-semibold text-lg 
+                                        rounded-t-lg
+                                        [&[data-state=open]>svg]:rotate-180
+                                    "
+                                >
+                                    <span>{yearName}</span>
+                                </AccordionTrigger>
+                                <AccordionContent 
+                                    className="
+                                        p-4 bg-white 
+                                        border-t border-gray-200 
+                                        rounded-b-lg
+                                    "
+                                >
                                     <div className="grid grid-cols-3 gap-4">
                                         {userPlan
                                             .slice(startQuarter, endQuarter) // Slice the userPlan array
@@ -112,7 +139,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                                                     season={season}
                                                     year={year}
                                                 >
-                                                    <div>
+                                                    <div className="mb-2 text-sm text-gray-600">
                                                         {(() => {
                                                             const totalUnits = courses.reduce(
                                                                 (acc, course) =>
@@ -123,11 +150,8 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                                                         })()}
                                                     </div>
                                                     {renderCourseCards(season, year)}
-                                                    {/* Rendering Logic for the Add Class button */}
-                                                    {!(
-                                                        selectedQuarter[0] == season &&
-                                                        selectedQuarter[1] == year
-                                                    ) && (
+                                                    {/* Add Class Button */}
+                                                    {!(selectedQuarter[0] == season && selectedQuarter[1] == year) && (
                                                         <AddClass
                                                             setSelectedQuarter={setSelectedQuarter}
                                                             setAddingClass={setAddingClass}
@@ -136,7 +160,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                                                         />
                                                     )}
                                                     <div className="flex justify-center">
-                                                        {/* Rendering Logic for Template "Add Classes" inputs*/}
+                                                        {/* Template Inputs */}
                                                         {isAddingClass &&
                                                             selectedQuarter[0] === season &&
                                                             selectedQuarter[1] === year && (
