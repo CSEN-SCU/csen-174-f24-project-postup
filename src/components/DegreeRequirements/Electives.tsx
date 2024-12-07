@@ -79,7 +79,7 @@ const ElectiveReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
   return electiveReqs ? (
     <div>
       <p>
-        <span className="font-bold">Requirements Fulfilled: </span>{" "}
+        <span className="font-bold text-blue-600">Requirements Fulfilled: </span>{" "}
         {electiveReqs[0]}
       </p>
       <div style={{ maxHeight: "300px", overflowY: "auto", marginTop: "20px" }}>
@@ -99,7 +99,7 @@ const ElectiveReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
         </ul>
       </div>
       <p>
-        <span className="font-bold">Classes left to take:</span>{" "}
+        <span className="font-bold text-blue-600">Classes left to take:</span>{" "}
         {electiveReqs[2]}
       </p>
     </div>
