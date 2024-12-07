@@ -31,6 +31,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default function Home() {
   const [selectedQuarter, setSelectedQuarter]: [
@@ -43,7 +44,6 @@ export default function Home() {
   const [userPlan, setUserPlan] = useState<UserCourseData[]>(userCourses);
   const [addingClass, setAddingClass] = useState<boolean>(false);
   const [availableCourses, setAvailableCourses] = useState<{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [x: string]: any;
   }>([]);
 
@@ -131,6 +131,48 @@ export default function Home() {
   };
 
   const onSubmit = (addedCourse: CourseData) => {
+    let coreqs = [];
+    console.log(addedCourse);
+    console.log(availableCourses[0]);
+    for (const course of availableCourses as any) {
+      if (course.courseId === addedCourse.id) {
+        coreqs = course.corequisiteCourses;
+        break;
+      }
+    }
+    coreqs = coreqs.map((coreq: string) =>
+      coreq.startsWith("COEN") ? coreq.replace("COEN", "CSEN") : coreq
+    );
+
+    const matchingCourses = [];
+    for (const course of availableCourses as any) {
+      if (coreqs.includes(course.courseId)) {
+        matchingCourses.push({
+          name: course.title,
+          id: course.courseId,
+          unit: course.units,
+          courseTags: course.courseTags,
+        });
+      }
+    }
+
+    for (const course of matchingCourses) {
+      setUserPlan((prevUserPlan) =>
+        prevUserPlan.map((quarter) => {
+          if (
+            quarter.season === selectedQuarter[0] &&
+            quarter.year === selectedQuarter[1]
+          ) {
+            return {
+              ...quarter,
+              courses: [...quarter.courses, course],
+            };
+          }
+          return quarter;
+        })
+      );
+    }
+
     setUserPlan((prevUserPlan) =>
       prevUserPlan.map((quarter) => {
         if (
@@ -145,6 +187,7 @@ export default function Home() {
         return quarter;
       })
     );
+
     setSelectedQuarter(["", ""]);
     setAddingClass(false);
   };
@@ -170,21 +213,27 @@ export default function Home() {
               <div className="col-span-1 space-y-8">
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="major-requirements">
-                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Major Requirements</AccordionTrigger>
+                    <AccordionTrigger style={{ fontWeight: "bold" }}>
+                      Major Requirements
+                    </AccordionTrigger>
                     <AccordionContent>
                       <MajorReqs userPlan={userPlan} />
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="core-requirements">
-                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Core Requirements</AccordionTrigger>
+                    <AccordionTrigger style={{ fontWeight: "bold" }}>
+                      Core Requirements
+                    </AccordionTrigger>
                     <AccordionContent>
                       <CoreReqs userPlan={userPlan} />
                     </AccordionContent>
                   </AccordionItem>
-                  
+
                   <AccordionItem value="elective-requirements">
-                    <AccordionTrigger style={{ fontWeight: 'bold' }}>Elective Requirements</AccordionTrigger>
+                    <AccordionTrigger style={{ fontWeight: "bold" }}>
+                      Elective Requirements
+                    </AccordionTrigger>
                     <AccordionContent>
                       <ElectiveReqs userPlan={userPlan} />
                     </AccordionContent>
