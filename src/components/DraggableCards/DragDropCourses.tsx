@@ -58,6 +58,9 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
         season: string,
         year: string
     ) => {
+        
+        console.log(courseId);
+
         const updatedQuarters = userPlan.map((quarter) => {
             if (quarter.season === season && quarter.year === year) {
                 return {

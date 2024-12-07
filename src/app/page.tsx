@@ -149,18 +149,12 @@ export default function Home() {
       if (coreqs.includes(course.courseId)) {
         matchingCourses.push({
           name: course.title,
-          id: course.courseListing,
+          id: course.courseId,
           unit: course.units,
           courseTags: course.courseTags,
         });
       }
     }
-    console.log(matchingCourses);
-
-    const updatedAvailableCourses = availableCourses.filter(
-      (course: any) => !coreqs.includes(course.courseId)
-    );
-    setAvailableCourses(updatedAvailableCourses);
 
     for (const course of matchingCourses) {
       setUserPlan((prevUserPlan) =>
