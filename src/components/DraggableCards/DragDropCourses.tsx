@@ -6,7 +6,6 @@ import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import {DragDropCardProps} from "@/app/utils/interfaces";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
-import { ChevronDown } from "lucide-react";
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
     setSelectedQuarter,
