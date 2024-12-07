@@ -157,6 +157,11 @@ export default function Home() {
     }
     console.log(matchingCourses);
 
+    const updatedAvailableCourses = availableCourses.filter(
+      (course: any) => !coreqs.includes(course.courseId)
+    );
+    setAvailableCourses(updatedAvailableCourses);
+
     for (const course of matchingCourses) {
       setUserPlan((prevUserPlan) =>
         prevUserPlan.map((quarter) => {
