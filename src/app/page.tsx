@@ -156,7 +156,7 @@ export default function Home() {
           <NavBar isLoggedIn={true} selectedPage={"Home"} />
 
           {/* Save Button positioned to the right */}
-          <div className="fixed bottom-6 right-6 z-50">
+          <div className="fixed bottom-6 right-10 z-50">
             <SaveButton userPlan={userPlan} />
           </div>
 

@@ -37,8 +37,8 @@ const CourseStatsCard: React.FC<CourseStatsCardProps> = ({ userPlan = [] }) => {
   }, 0);
   // Progress percentage
   const progressPercentage = Math.min(
-    Math.round((totalCourses / Math.max(userPlan.length * 4, 1)) * 100), 
-    100
+    Math.round((totalUnits / 175) * 100), // Total units out of 175
+    100 // Caps progress at 100%
   );
   return (
     <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">

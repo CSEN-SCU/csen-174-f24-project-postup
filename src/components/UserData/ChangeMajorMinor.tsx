@@ -133,13 +133,6 @@ const ChangeYearMajorMinorPathStand = () => {
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
-          <Button
-            variant={"outline"}
-            className="font-bold text-white ml-10 self-end"
-            onClick={() => {editUserYearMajorMinorPathStand()}}
-          >
-            Save
-          </Button>
         </DropdownMenu>
       </div>
       <div>
@@ -163,6 +156,13 @@ const ChangeYearMajorMinorPathStand = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <Button
+        variant={"outline"}
+        className="bg-blue-600 font-bold text-white mt-3 ml-10 self-end justify-end"
+        onClick={() => {editUserYearMajorMinorPathStand()}}
+      >
+        Save
+      </Button>
     </div>
   );
 };
