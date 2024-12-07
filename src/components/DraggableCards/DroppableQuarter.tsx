@@ -25,7 +25,7 @@ const DroppableQuarter: React.FC<DroppableQuarterProps> = ({
 
   return (
     <div ref={setNodeRef} style={style} className="border-solid border-2 #000 rounded-md shadow-md">
-      <h3>
+      <h3 className="font-bold">
         {season} {year}
       </h3>
       <div ref={parentRef}>{children}</div> {/* Auto-animate applied here */}

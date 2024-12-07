@@ -109,7 +109,7 @@ const MajorReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
   return majorReqsInfo ? (
     <div>
       <p>
-        <span className="font-bold">Requirements Fulfilled: </span>{" "}
+        <span className="font-bold text-blue-600">Requirements Fulfilled: </span>{" "}
         {majorReqsInfo[0]}
       </p>
       <div style={{ maxHeight: "300px", overflowY: "auto", marginTop: "20px" }}>
@@ -129,7 +129,7 @@ const MajorReqs: React.FC<currentUserPlan> = ({ userPlan }) => {
         </ul>
       </div>
       <p>
-        <span className="font-bold">Classes left to take:</span>{" "}
+        <span className="font-bold text-blue-600">Classes left to take:</span>{" "}
         {majorReqsInfo[2]}
       </p>
     </div>

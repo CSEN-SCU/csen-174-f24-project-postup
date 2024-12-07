@@ -37,56 +37,56 @@ const CourseStatsCard: React.FC<CourseStatsCardProps> = ({ userPlan = [] }) => {
   }, 0);
   // Progress percentage
   const progressPercentage = Math.min(
-    Math.round((totalCourses / Math.max(userPlan.length * 4, 1)) * 100), 
-    100
+    Math.round((totalUnits / 175) * 100), // Total units out of 175
+    100 // Caps progress at 100%
   );
   return (
     <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <CardHeader className="border-b bg-gray-50">
-        <CardTitle className="text-3xl font-bold text-gray-800">
-          Your Course Planning Overview
+      <CardHeader className="border-b bg-gray-50 py-3">
+        <CardTitle className="text-xl font-bold text-gray-800">
+          Course Planning Overview
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <CardContent className="p-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {/* Total Courses */}
-          <div className="flex items-start space-x-3">
-            <Book className="w-6 h-6 text-blue-600 mt-1" />
+          <div className="flex items-start space-x-2">
+            <Book className="w-5 h-5 text-blue-600 mt-0.5" />
             <div>
-              <p className="font-semibold text-gray-700">Total Courses</p>
-              <p className="text-2xl font-bold text-gray-800">{totalCourses}</p>
+              <p className="text-l text-gray-900">Total Courses</p>
+              <p className="text-xl font-bold text-gray-800">{totalCourses}</p>
             </div>
           </div>
           {/* Quarters Planned */}
-          <div className="flex items-start space-x-3">
-            <Clock className="w-6 h-6 text-green-600 mt-1" />
+          <div className="flex items-start space-x-2">
+            <Clock className="w-5 h-5 text-green-600 mt-0.5" />
             <div>
-              <p className="font-semibold text-gray-700">Quarters Planned</p>
-              <p className="text-2xl font-bold text-gray-800">{quartersWithCourses}</p>
+              <p className="text-l text-gray-900">Quarters Planned</p>
+              <p className="text-xl font-bold text-gray-800">{quartersWithCourses}</p>
             </div>
           </div>
           {/* Total Units */}
-          <div className="flex items-start space-x-3">
-            <CheckCircle className="w-6 h-6 text-purple-600 mt-1" />
+          <div className="flex items-start space-x-2">
+            <CheckCircle className="w-5 h-5 text-purple-600 mt-0.5" />
             <div>
-              <p className="font-semibold text-gray-700">Total Units</p>
-              <p className="text-2xl font-bold text-gray-800">{totalUnits.toFixed(1)}</p>
+              <p className="text-l text-gray-900">Total Units</p>
+              <p className="text-xl font-bold text-gray-800">{totalUnits.toFixed(1)}</p>
             </div>
           </div>
           {/* Progress */}
-          <div className="flex items-start space-x-3">
-            <TrendingUp className="w-6 h-6 text-orange-600 mt-1" />
+          <div className="flex items-start space-x-2">
+            <TrendingUp className="w-5 h-5 text-orange-600 mt-0.5" />
             <div>
-              <p className="font-semibold text-gray-700">Progress</p>
-              <p className="text-2xl font-bold text-gray-800">{progressPercentage}%</p>
+              <p className="text-l text-gray-900">Progress</p>
+              <p className="text-xl font-bold text-gray-800">{progressPercentage}%</p>
             </div>
           </div>
         </div>
         
         {/* Progress Bar */}
-        <div className="mt-4 w-full bg-gray-200 rounded-full h-2.5">
+        <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
           <div 
-            className="bg-blue-600 h-2.5 rounded-full" 
+            className="bg-blue-600 h-2 rounded-full" 
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
