@@ -106,6 +106,7 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                             type="single" 
                             collapsible 
                             className="w-full border rounded-lg shadow-sm"
+                            defaultValue={`item-${yearIndex + 1}`}
                         >
                             <AccordionItem 
                                 value={`item-${yearIndex + 1}`} 
