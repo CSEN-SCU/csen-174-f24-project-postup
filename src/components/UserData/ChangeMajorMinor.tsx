@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { years } from "./YearOptions"
+import { years } from "./YearOptions";
 import { majors } from "./MajorOptions";
 import { minors } from "./MinorOptions";
 import { pathways } from "./PathwayOptions";
@@ -36,7 +36,7 @@ const ChangeYearMajorMinorPathStand = () => {
         if (newMinor) updateData.minor = newMinor;
         if (newPathway) updateData.pathway = newPathway;
         if (newStanding) updateData.standing = newStanding;
-        
+
         // only update if there's anything changed
         if (Object.keys(updateData).length > 0) {
           await updateDoc(userDocRef, updateData);
@@ -56,8 +56,8 @@ const ChangeYearMajorMinorPathStand = () => {
         <p className="font-bold">Edit Grade Year:</p>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white">
-              <p>Select a New Grade Year</p>
+            <Button variant={"outline"} className="font-bold text-white" size="sm">
+              {newYear === null ? <p>Select a New Grade Year</p> : <p>{newYear}</p>}
             </Button>
           </DropdownMenuTrigger>
 
@@ -77,8 +77,8 @@ const ChangeYearMajorMinorPathStand = () => {
         <p className="font-bold">Edit Major: </p>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white">
-              <p>Select a New Major</p>
+            <Button variant={"outline"} className="font-bold text-white" size="sm">
+            {newMajor === null ? <p>Select a New Major</p> : <p>{newMajor}</p>}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -97,8 +97,8 @@ const ChangeYearMajorMinorPathStand = () => {
         <p className="font-bold">Edit Minor:</p>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white">
-              <p>Select a New Minor</p>
+            <Button variant={"outline"} className="font-bold text-white" size="sm">
+            {newMinor === null ? <p>Select a New Minor</p> : <p>{newMinor}</p>}
             </Button>
           </DropdownMenuTrigger>
 
@@ -118,8 +118,8 @@ const ChangeYearMajorMinorPathStand = () => {
         <p className="font-bold">Edit Pathway:</p>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white">
-              <p>Select Pathway</p>
+            <Button variant={"outline"} className="font-bold text-white" size="sm">
+              {newPathway === null ? <p>Select Pathway</p> : <p>{newPathway}</p>}
             </Button>
           </DropdownMenuTrigger>
 
@@ -139,8 +139,8 @@ const ChangeYearMajorMinorPathStand = () => {
         <p className="font-bold">Edit Year Standing:</p>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white">
-              <p>Select a New Year Standing</p>
+            <Button variant={"outline"} className="font-bold text-white" size="sm">
+              {newStanding === null ? <p>Select a New Year Standing</p> : <p>{newStanding}</p>}
             </Button>
           </DropdownMenuTrigger>
 
@@ -159,7 +159,9 @@ const ChangeYearMajorMinorPathStand = () => {
       <Button
         variant={"outline"}
         className="bg-blue-600 font-bold text-white mt-3 ml-10 self-end justify-end"
-        onClick={() => {editUserYearMajorMinorPathStand()}}
+        onClick={() => {
+          editUserYearMajorMinorPathStand();
+        }}
       >
         Save
       </Button>
