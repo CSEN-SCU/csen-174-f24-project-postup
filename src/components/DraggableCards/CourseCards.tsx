@@ -71,7 +71,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
               }}
               className="text-white bg-slate-600 hover:bg-slate-500 active:bg-slate-400 rounded-sm w-5 h-5 flex items-center justify-center"
             >
-              <span className="text-xs text-white text-center">🗙</span>
+              <span className="text-xs text-white text-center">𝕏</span>
             </button>
             {!isLocked && (
               <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 
