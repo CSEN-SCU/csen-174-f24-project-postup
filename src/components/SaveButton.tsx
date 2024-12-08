@@ -33,7 +33,7 @@ const SaveButton: React.FC<currentUserPlan> = ({userPlan}) => {
   return (
     <div className="flex flex-col w-full">
       {saveComplete === true && (
-        <p className="text-green-500 mb-2">Save complete!</p>
+        <p className="text-green-500 mb-2">Saved!</p>
       )}
       {saveComplete === false && (
         <p className="text-red-500 mb-2">Save Failed!</p>
