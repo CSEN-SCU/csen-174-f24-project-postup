@@ -135,27 +135,6 @@ const ChangeYearMajorMinorPathStand = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div>
-        <p className="font-bold">Edit Year Standing:</p>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white" size="sm">
-              {newStanding === null ? <p>Select a New Year Standing</p> : <p>{newStanding}</p>}
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent>
-            {standings.map((standing, index) => (
-              <DropdownMenuItem
-                key={index}
-                onClick={() => setNewStanding(standing.standing)}
-              >
-                {standing.standing}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
       <Button
         variant={"outline"}
         className="bg-blue-600 font-bold text-white mt-3 ml-10 self-end justify-end"
