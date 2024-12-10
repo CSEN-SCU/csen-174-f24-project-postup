@@ -10,7 +10,6 @@ import { years } from "./YearOptions";
 import { majors } from "./MajorOptions";
 import { minors } from "./MinorOptions";
 import { pathways } from "./PathwayOptions";
-import { standings } from "./StandingOptions";
 import { doc, getDoc, updateDoc, collection } from "firebase/firestore";
 import { auth, db } from "@/app/utils/firebase";
 
@@ -19,7 +18,6 @@ const ChangeYearMajorMinorPathStand = () => {
   const [newMajor, setNewMajor] = useState<string | null>(null);
   const [newMinor, setNewMinor] = useState<string | null>(null);
   const [newPathway, setNewPathway] = useState<string | null>(null);
-  const [newStanding, setNewStanding] = useState<string | null>(null);
 
   const editUserYearMajorMinorPathStand = async () => {
     const userId = auth.currentUser?.uid;
@@ -35,7 +33,6 @@ const ChangeYearMajorMinorPathStand = () => {
         if (newMajor) updateData.major = newMajor;
         if (newMinor) updateData.minor = newMinor;
         if (newPathway) updateData.pathway = newPathway;
-        if (newStanding) updateData.standing = newStanding;
 
         // only update if there's anything changed
         if (Object.keys(updateData).length > 0) {
@@ -130,27 +127,6 @@ const ChangeYearMajorMinorPathStand = () => {
                 onClick={() => setNewPathway(pathway.pathway)}
               >
                 {pathway.pathway}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <div>
-        <p className="font-bold">Edit Year Standing:</p>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant={"outline"} className="font-bold text-white" size="sm">
-              {newStanding === null ? <p>Select a New Year Standing</p> : <p>{newStanding}</p>}
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent>
-            {standings.map((standing, index) => (
-              <DropdownMenuItem
-                key={index}
-                onClick={() => setNewStanding(standing.standing)}
-              >
-                {standing.standing}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
