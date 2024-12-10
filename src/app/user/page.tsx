@@ -9,7 +9,9 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import BaseImage from "../UserImage.jpg"
 import ChangeMajorMinor from "@/components/UserData/ChangeMajorMinor";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const [userInfo, setUserInfo] = useState<DocumentData | null | undefined>(
@@ -44,7 +46,7 @@ export default function ProfilePage() {
             src={userInfo?.profilePicture}
             className="rounded-full"
           ></AvatarImage>
-          <AvatarFallback>User</AvatarFallback>
+          <AvatarFallback><Image src={BaseImage} className="m-auto w-1/2" alt="User Profile"/></AvatarFallback>
         </Avatar>
         <h2 className="text-xl font-bold mt-4">Welcome, {userInfo?.name}</h2>
       </div>
