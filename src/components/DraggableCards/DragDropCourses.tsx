@@ -6,6 +6,7 @@ import CourseCard from "./CourseCards";
 import DroppableQuarter from "./DroppableQuarter";
 import {DragDropCardProps} from "@/app/utils/interfaces";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import React, { useState, useEffect } from "react";
 
 const DragDropCourses: React.FC<DragDropCardProps> = ({
     setSelectedQuarter,
@@ -17,6 +18,17 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
     onSubmit,
     availableCourses,
 }) => {
+    const [isDisclaimerVisible, setIsDisclaimerVisible] = useState(true); // Initialize the disclaimer state
+    
+    useEffect(() => {
+        // Set a timer to hide the disclaimer after 30 seconds
+        const timer = setTimeout(() => {
+            setIsDisclaimerVisible(false);
+        }, 15000); // 15 seconds in milliseconds
+
+        return () => clearTimeout(timer); // Clear the timer if the component unmounts
+    }, []);
+    
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
         if (!over || !active.data.current) return;
@@ -52,6 +64,8 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
             setUserPlan(updatedQuarters);
         }
     };
+
+    
 
     const handleRemoveClass = (
         courseId: string,
@@ -182,6 +196,24 @@ const DragDropCourses: React.FC<DragDropCardProps> = ({
                         </Accordion>
                     );
                 })}
+                 {/* Add Disclaimer at the Bottom */}
+                 {isDisclaimerVisible && (
+                    <div
+                        className="text-gray-600 text-sm py-2 bg-gray-200 fixed bottom-4 left-1/2 transform -translate-x-1/2 w-11/12 max-w-lg flex items-center justify-center px-4 rounded-lg shadow-lg"
+                    >
+                        <button
+                            onClick={() => setIsDisclaimerVisible(false)} // Hide the disclaimer on button click
+                            className="text-gray-500 hover:text-gray-800 focus:outline-none bg-transparent border-none cursor-pointer text-xl font-bold mr-4"
+                            aria-label="Close disclaimer"
+                        >
+                            ✖
+                        </button>
+                        <span>
+                            Disclaimer: Courses listed may not be offered during the selected quarters or may be subjected to change.
+                        </span>
+                    </div>
+                )}
+
             </div>
         </DndContext>
     );
