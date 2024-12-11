@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         // Edit button styling here! -Raph
         outline:
-          "border border-input bg-slate-500 shadow hover:bg-slate-400 active:bg-slate-200",
+           "border border-input bg-slate-500 shadow hover:bg-slate-400 active:bg-slate-200",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
