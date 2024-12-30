@@ -134,7 +134,7 @@ const ChangeYearMajorMinorPathStand = () => {
       </div>
       <Button
         variant={"outline"}
-        className="bg-blue-600 font-bold text-white mt-3 ml-10 self-end justify-end"
+        className="font-bold text-white mt-3 ml-10 self-end justify-end"
         onClick={() => {
           editUserYearMajorMinorPathStand();
         }}
