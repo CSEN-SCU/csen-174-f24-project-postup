@@ -1,8 +1,10 @@
+# Note, credentials have been removed from GitHub secrets as this project is complete.
+# Additionally, the cron job has been commented out to stop automatic updates.
 name: Update Courses
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
+#    - cron: '0 0 * * *' # Runs every day at midnight
 
 jobs:
   update-courses:
